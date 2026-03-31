@@ -12,7 +12,8 @@ Claude Code(우선)에서 쓰는 **번들(bundle)** — skills, hooks, commands,
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Phase 1 (Validated in Phase 1: Spec + local bundle MVP): `bundle.json`(또는 동등) 스키마, lineage 정책, CLI 명령 형태, Cursor/Codex mapping spec 초안이 레포에 고정되었다.
+- [x] Phase 1 (Validated in Phase 1: Spec + local bundle MVP): 로컬 MVP(pack / unpack / manifest / Claude `apply` / 시크릿 lint 초안)가 서버 없이 E2E로 검증되었다.
 
 ### Active
 
@@ -57,6 +58,10 @@ Claude Code(우선)에서 쓰는 **번들(bundle)** — skills, hooks, commands,
 
 This document evolves at phase transitions and milestone boundaries.
 
+## Current State
+
+Phase 1 complete (2026-03-31): local bundle MVP and spec foundations are validated. Next focus is Phase 2 backend + private backup.
+
 **After each phase transition** (via `/gsd-transition`):
 
 1. Requirements invalidated? → Move to Out of Scope with reason
@@ -74,4 +79,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-*Last updated: 2026-03-31 after initialization*
+*Last updated: 2026-03-31 after Phase 1 completion*
