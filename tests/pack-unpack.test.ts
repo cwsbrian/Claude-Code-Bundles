@@ -1,10 +1,40 @@
-import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { pack } from "../src/lib/pack.js";
 import { unpack } from "../src/lib/unpack.js";
 import { computeSnapshotId } from "../src/lib/snapshot-hash.js";
+
+const fixturesRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "fixtures/golden-bundle",
+);
+
+async function readSnapshotEntries(rootDir: string): Promise<Array<{ relativePath: string; content: Buffer }>> {
+  const entries: Array<{ relativePath: string; content: Buffer }> = [];
+
+  async function visit(currentDir: string): Promise<void> {
+    const dirEntries = await readdir(currentDir, { withFileTypes: true });
+    for (const entry of dirEntries) {
+      const abs = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        await visit(abs);
+        continue;
+      }
+      if (entry.isFile()) {
+        entries.push({
+          relativePath: path.relative(rootDir, abs).replaceAll(path.sep, "/"),
+          content: await readFile(abs),
+        });
+      }
+    }
+  }
+
+  await visit(rootDir);
+  return entries.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+}
 
 describe("pack and unpack", () => {
   it("snapshot hash is deterministic for fixed inputs", () => {
@@ -60,5 +90,25 @@ describe("pack and unpack", () => {
     expect(unpackedHash).toBe(
       "81a1ef9a3a503319050696a3e9b274b11525e14ce22960b691d784f4f4be23c3",
     );
+  });
+
+  it("CLI-02 golden fixture round-trip uses normalized snapshot equality (D-05)", async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), "ccb-golden-"));
+    const archivePath = path.join(root, "golden.zip");
+    const outDir = path.join(root, "unpacked");
+    const manifestPath = path.join(fixturesRoot, "manifest.json");
+
+    await pack({ manifestPath, outArchivePath: archivePath });
+    await unpack({ archivePath, outDir });
+
+    const expectedSnapshotId = (
+      await readFile(path.join(fixturesRoot, "EXPECTED_SNAPSHOT_ID.txt"), "utf8")
+    ).trim();
+
+    const unpackedFiles = await readSnapshotEntries(outDir);
+    const actualSnapshotId = computeSnapshotId(unpackedFiles);
+
+    // D-05/CLI-02: compare normalized content snapshot, not raw zip bytes.
+    expect(actualSnapshotId).toBe(expectedSnapshotId);
   });
 });

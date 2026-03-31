@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "golden-bundle-001",
+  "name": "Golden Bundle Fixture",
+  "visibility": "private",
+  "version": "1.0.0",
+  "manifest_path": "manifest.json",
+  "payload_path": "payload"
+}
