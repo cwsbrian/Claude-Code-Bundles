@@ -7,10 +7,10 @@
 
 ### Specification & governance
 
-- [ ] **SPEC-01**: `bundle.json`(또는 동등) 스키마가 버전과 함께 문서화되어 있고 레포에 고정된다.
-- [ ] **SPEC-02**: Import 시 private copy 생성, upstream 자동 동기화 없음, lineage는 스냅샷 관계만 남김이 문서·정책으로 명시된다.
-- [ ] **SPEC-03**: 로컬·원격 CLI/API에서 사용할 명령·엔드포인트 표면(pack/unpack/apply/sync 등)이 정의된다.
-- [ ] **TOOL-01**: Cursor/Codex용 코어→툴별 경로·규칙 매핑 표(스펙만)가 작성된다.
+- [x] **SPEC-01**: `bundle.json`(또는 동등) 스키마가 버전과 함께 문서화되어 있고 레포에 고정된다.
+- [x] **SPEC-02**: Import 시 private copy 생성, upstream 자동 동기화 없음, lineage는 스냅샷 관계만 남김이 문서·정책으로 명시된다.
+- [x] **SPEC-03**: 로컬·원격 CLI/API에서 사용할 명령·엔드포인트 표면(pack/unpack/apply/sync 등)이 정의된다.
+- [x] **TOOL-01**: Cursor/Codex용 코어→툴별 경로·규칙 매핑 표(스펙만)가 작성된다.
 
 ### Local CLI (Claude-first)
 
@@ -66,10 +66,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SPEC-01 | Phase 1 | Pending |
-| SPEC-02 | Phase 1 | Pending |
-| SPEC-03 | Phase 1 | Pending |
-| TOOL-01 | Phase 1 | Pending |
+| SPEC-01 | Phase 1 | Complete |
+| SPEC-02 | Phase 1 | Complete |
+| SPEC-03 | Phase 1 | Complete |
+| TOOL-01 | Phase 1 | Complete |
 | CLI-01 | Phase 1 | Pending |
 | CLI-02 | Phase 1 | Pending |
 | CLI-03 | Phase 1 | Pending |
