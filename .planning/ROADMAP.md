@@ -29,13 +29,13 @@
 3. `apply` 후 Claude Code가 기대하는 로컬 레이아웃이 생성된다.
 4. 시크릿 lint가 의도된 샘플에 대해 경고 또는 차단을 일으킨다.
 
-**Plans:** TBD
+**Plans:** 3 plans
 
 Plans:
 
-- [ ] 01-01: 스키마·정책·CLI 명령 문서를 레포에 고정하고 버전 정책 정의
-- [ ] 01-02: pack/unpack 구현 및 fixture 테스트
-- [ ] 01-03: Claude `apply` + lint + 로컬 E2E 시나리오
+- [ ] [01-01-PLAN.md](phases/01-spec-local-bundle-mvp/01-01-PLAN.md) — 스키마·정책·CLI·툴 매핑 문서 고정 및 schema_version 정책 (SPEC-01–03, TOOL-01)
+- [ ] [01-02-PLAN.md](phases/01-spec-local-bundle-mvp/01-02-PLAN.md) — pack/unpack + 정규화 스냅샷 해시 + golden fixture (CLI-01, CLI-02)
+- [ ] [01-03-PLAN.md](phases/01-spec-local-bundle-mvp/01-03-PLAN.md) — apply/install/list/lint/create + 로컬 E2E (CLI-03, CLI-04)
 
 ### Phase 2: Backend + private backup
 
@@ -126,7 +126,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Spec + local MVP | 0/3 | Not started | - |
+| 1. Spec + local MVP | 0/3 | Planning complete | - |
 | 2. Backend + backup | 0/3 | Not started | - |
 | 3. Multi-device | 0/2 | Not started | - |
 | 4. Public + lineage | 0/2 | Not started | - |
