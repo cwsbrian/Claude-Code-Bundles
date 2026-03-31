@@ -14,7 +14,7 @@ describe("pack and unpack", () => {
     ]);
 
     expect(snapshot).toBe(
-      "15d5ea167136ab34063dbf5f07f8d3f4c2fa4cf0498f3a6670f75597fb730381",
+      "8b1619c01f5fdd8a650671a9ab455e0f11f74ef3c061d8fbae442b32c3b847b1",
     );
   });
 
@@ -39,7 +39,7 @@ describe("pack and unpack", () => {
           visibility: "private",
           version: "0.0.1",
           manifest_path: "manifest.json",
-          payload_path: ".",
+          payload_path: "src",
         },
         null,
         2,
@@ -58,7 +58,7 @@ describe("pack and unpack", () => {
     ]);
 
     expect(unpackedHash).toBe(
-      "bf95f98a997cd4ec2005441718f10a6d179a4f1f9ac79358a2696a0eed3fa88b",
+      "81a1ef9a3a503319050696a3e9b274b11525e14ce22960b691d784f4f4be23c3",
     );
   });
 });
