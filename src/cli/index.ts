@@ -9,11 +9,13 @@ import { pack } from "../lib/pack.js";
 import { unpack } from "../lib/unpack.js";
 import { applyBundle } from "../lib/apply.js";
 import { listRegistry, updateRegistry } from "../lib/registry.js";
+import { lintArchive } from "../lib/lint.js";
 
 type ParsedPackArgs = { manifestPath: string; outArchivePath: string };
 type ParsedUnpackArgs = { archivePath: string; outDir: string };
 type ParsedApplyArgs = { manifestPath: string; force: boolean };
 type ParsedInstallArgs = { archivePath: string; force: boolean };
+type ParsedLintArgs = { archivePath: string; manifestPath: string };
 
 function getArgValue(args: string[], ...flags: string[]): string | undefined {
   for (let i = 0; i < args.length; i += 1) {
@@ -69,6 +71,18 @@ function parseInstallArgs(args: string[]): ParsedInstallArgs {
     throw new Error("Missing --archive for install.");
   }
   return { archivePath, force: args.includes("--force") };
+}
+
+function parseLintArgs(args: string[]): ParsedLintArgs {
+  const archivePath = getArgValue(args, "--archive", "-a");
+  const manifestPath = getArgValue(args, "--manifest", "-m");
+  if (!archivePath) {
+    throw new Error("Missing --archive for lint.");
+  }
+  if (!manifestPath) {
+    throw new Error("Missing --manifest for lint.");
+  }
+  return { archivePath, manifestPath };
 }
 
 function printUsage(): void {
@@ -193,6 +207,33 @@ export async function main(argv: string[]): Promise<void> {
       for (const target of entry.installedPaths) {
         process.stdout.write(`  - ${target}\n`);
       }
+    }
+    return;
+  }
+
+  if (command === "lint") {
+    const parsed = parseLintArgs(args);
+    const result = await lintArchive({
+      archivePath: parsed.archivePath,
+      manifestPath: parsed.manifestPath,
+    });
+    for (const finding of result.findings) {
+      const line = `${finding.rule}: ${finding.filePath} (${finding.detail})\n`;
+      if (result.blocking) {
+        process.stderr.write(line);
+      } else {
+        process.stdout.write(line);
+      }
+    }
+    if (result.blocking) {
+      process.stderr.write("Lint failed: public bundle contains high-confidence secrets.\n");
+      process.exitCode = 1;
+      return;
+    }
+    if (result.findings.length > 0) {
+      process.stderr.write("Lint warning: private bundle contains sensitive patterns.\n");
+    } else {
+      process.stdout.write("Lint passed.\n");
     }
     return;
   }
