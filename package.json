@@ -1,0 +1,25 @@
+{
+  "name": "claude-code-bundles",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local CLI for Claude Code bundle pack/unpack MVP.",
+  "bin": {
+    "ccb": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "dev": "tsx src/cli/index.ts"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "adm-zip": "^0.5.16"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
