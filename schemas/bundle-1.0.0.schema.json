@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://claude-code-bundles.local/schemas/bundle-1.0.0.schema.json",
+  "title": "Claude Code Bundle Manifest",
+  "description": "Phase 1 local bundle manifest schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "name",
+    "visibility",
+    "version",
+    "manifest_path",
+    "payload_path"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Schema version for this manifest document."
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "private",
+        "public"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manifest_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payload_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "origin_bundle_id": {
+          "type": "string"
+        },
+        "origin_snapshot_id": {
+          "type": "string"
+        },
+        "imported_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "root_bundle_id": {
+          "type": "string"
+        },
+        "root_author_id": {
+          "type": "string"
+        },
+        "parent_bundle_id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
