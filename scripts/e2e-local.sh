@@ -19,11 +19,11 @@ export BUNDLE_CLI_VISIBILITY="private"
 export BUNDLE_CLI_ITEMS="1"
 
 cd "$WORK_DIR"
-node "$ROOT_DIR/dist/cli/index.js" create
-node "$ROOT_DIR/dist/cli/index.js" manifest validate bundle.json
-node "$ROOT_DIR/dist/cli/index.js" pack --manifest bundle.json --out bundle.zip
-node "$ROOT_DIR/dist/cli/index.js" lint --archive bundle.zip --manifest bundle.json
-node "$ROOT_DIR/dist/cli/index.js" apply --manifest bundle.json --force
-node "$ROOT_DIR/dist/cli/index.js" list
+node "$ROOT_DIR/packages/cli/dist/index.js" create
+node "$ROOT_DIR/packages/cli/dist/index.js" manifest validate bundle.json
+node "$ROOT_DIR/packages/cli/dist/index.js" pack --manifest bundle.json --out bundle.zip
+node "$ROOT_DIR/packages/cli/dist/index.js" lint --archive bundle.zip --manifest bundle.json
+node "$ROOT_DIR/packages/cli/dist/index.js" apply --manifest bundle.json --force
+node "$ROOT_DIR/packages/cli/dist/index.js" list
 
 echo "OK: local E2E completed"

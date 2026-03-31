@@ -3,9 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { pack } from "../src/lib/pack.js";
-import { unpack } from "../src/lib/unpack.js";
-import { computeSnapshotId } from "../src/lib/snapshot-hash.js";
+import { computeSnapshotId, pack, unpack } from "@claude-code-bundles/core";
 
 const fixturesRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),

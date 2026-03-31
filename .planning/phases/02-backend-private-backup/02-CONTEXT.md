@@ -6,8 +6,8 @@
 <domain>
 ## Phase Boundary
 
-**같은 계정**으로 로컬에서 만든 번들 아카이브를 **Vercel API 경유**로 업로드하고, **Supabase**(Postgres + Storage)에 private 메타·객체를 남긴 뒤, **단일 기기**에서 목록 조회·다운로드·로컬 복원까지 증明한다.  
-Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및 설계 문서의 **Storage 쓰기는 서버만** 원칙 범위 안에서만 동작한다. **멀티 디바이스·public·import**는 Phase 3+.
+**같은 계정**으로 로컬에서 만든 번들 아카이브를 **Vercel API 경유**로 업로드하고, **Supabase Postgres**에 private 메타를 남기고 **Cloudflare R2**에 zip 객체를 남긴 뒤, **단일 기기**에서 목록 조회·다운로드·로컬 복원까지 증明한다.  
+Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및 설계 문서의 **객체 스토어 쓰기는 서버만** 원칙 범위 안에서만 동작한다. **멀티 디바이스·public·import**는 Phase 3+.
 
 </domain>
 
@@ -26,19 +26,19 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 ### 인증·권한 모델
 
 - **D-03:** 클라이언트(브라우저·CLI)는 **Supabase Auth**로 세션을 얻고, Vercel API 호출 시 **`Authorization: Bearer <access_token>`**(또는 동등의 Supabase 세션 토큰)을 보낸다.
-- **D-04:** API Route에서는 토큰으로 사용자를 검증한 뒤에만 DB/Storage 작업을 허용한다. **서버 전용** Supabase **service role** 키는 **Route Handler 서버 측에서만** 사용하며, 클라이언트 번들에 포함하지 않는다.
+- **D-04:** API Route에서는 토큰으로 사용자를 검증한 뒤에만 DB·R2 작업을 허용한다. **서버 전용** Supabase **service role** 키는 **Postgres**용; **R2 API 토큰**은 S3 클라이언트용 — 모두 Route Handler에서만, 클라이언트 번들에 포함하지 않는다.
 - **D-05:** Phase 2 범위에서 **모든 업로드·조회·다운로드는 “소유한 private 번들”에 한정**된다. `public`, 타 사용자 행 접근은 Phase 4+.
 
 ### 업로드·다운로드 계약(HTTP)
 
-- **D-06:** 업로드는 **직접 Storage 업로드 금지** — 요청 본문은 API로만 온다(PROJECT.md 비목표와 일치). 페이로드 형식: **`multipart/form-data`** 에 단일 파일 필드(예: `archive`)로 **zip 번들 아카이브**를 받는다(Phase 1 `pack` 산출과 호환).
-- **D-07:** 업로드 응답은 최소 **번들 id, 스냅샷 id(또는 버전), 정규화 스냅샷 해시, Storage 객체 키(내부용)** 를 반환할 수 있어야 한다. 필드 이름은 구현에서 고정하고 OpenAPI/문서에 적는다.
-- **D-08:** 다운로드는 **인증된 소유자만** 가능하고, **서버가 Storage에서 읽어** 스트림하거나 **단기 signed URL**을 발급하는 패턴 중 하나를 택한다 — **권장: 서버 스트림**(정책·로깅 일원화). 최종 선택은 구현 단계에서 하나로 고정한다.
+- **D-06:** 업로드는 **직접 R2 업로드 금지** — 요청 본문은 API로만 온다(PROJECT.md 비목표와 일치). 페이로드 형식: **`multipart/form-data`** 에 단일 파일 필드(예: `archive`)로 **zip 번들 아카이브**를 받는다(Phase 1 `pack` 산출과 호환).
+- **D-07:** 업로드 응답은 최소 **번들 id, 스냅샷 id(또는 버전), 정규화 스냅샷 해시, 객체 키(내부용)** 를 반환할 수 있어야 한다. 필드 이름은 구현에서 고정하고 OpenAPI/문서에 적는다.
+- **D-08:** 다운로드는 **인증된 소유자만** 가능하고, **서버가 R2에서 읽어** 스트림하거나 **단기 signed URL**을 발급하는 패턴 중 하나를 택한다 — **권장: 서버 스트림**(정책·로깅 일원화). 최종 선택은 구현 단계에서 하나로 고정한다.
 
-### DB·Storage 구조(요약 레벨)
+### DB·객체 스토어 구조(요약 레벨)
 
 - **D-09:** Postgres에는 REQUIREMENTS **BE-01**에 맞춰 최소 **`bundles`**, **`bundle_snapshots`**, 그리고 이후 lineage를 위해 **`bundle_lineage`**(또는 동등 관계)가 마이그레이션으로 존재해야 한다. 구체 컬럼·FK는 설계 스케치 + Phase 3 연속성을 고려해 planner가 확정한다.
-- **D-10:** Storage 객체 키 네임스페이스는 **`{userId}/...`** 형태를 기본으로 하고(설계 문서 §4), **DB에 기록된 소유자**와 요청 주체가 일치할 때만 쓰기·읽기를 허용한다.
+- **D-10:** R2 객체 키 네임스페이스는 **`{userId}/...`** 형태를 기본으로 하고(설계 문서 §4), **DB에 기록된 소유자**와 요청 주체가 일치할 때만 쓰기·읽기를 허용한다.
 - **D-11:** 동일 번들에 대해 **동일 정규화 스냅샷 해시**가 이미 존재하면 **새 바이너리 업로드를 생략**하고 기존 스냅샷을 참조하는 **멱등** 동작을 허용한다(설계 문서 §5 “중복 정책(해시 기준)”).
 
 ### 서버 측 검증·거절 UX
@@ -88,7 +88,7 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 ### Design spec
 
-- `docs/superpowers/specs/2026-03-31-claude-code-bundle-platform-design.md` — 아키텍처, 데이터 플로, Storage 정책, 테스트 방향
+- `docs/superpowers/specs/2026-03-31-claude-code-bundle-platform-design.md` — 아키텍처, 데이터 플로, R2·Postgres 정책, 테스트 방향
 
 </canonical_refs>
 
@@ -108,7 +108,7 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 - `packages/cli` → `apps/web` API (upload/list/download).
 - `apps/web` Route Handlers → `packages/core` (validate, snapshot id, server lint).
-- Supabase Auth ↔ Bearer ↔ service role Storage/DB.
+- Supabase Auth ↔ Bearer ↔ service role **DB**; R2 API 토큰 ↔ S3 클라이언트.
 
 </code_context>
 
@@ -124,7 +124,7 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 - **멀티 디바이스** `device_bundle_installs`, pull 정책 — Phase 3 (**SYNC-01/02**).
 - **Public / import / lineage UI** — Phase 4+.
-- **클라이언트 직접 Storage 업로드(프리사인)** — PROJECT 비목표 유지.
+- **클라이언트 직접 R2 업로드(프리사인)** — PROJECT 비목표 유지.
 
 ### Reviewed Todos (not folded)
 

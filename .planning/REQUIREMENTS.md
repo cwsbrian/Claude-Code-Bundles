@@ -21,11 +21,11 @@
 
 ### Backend (Vercel + Supabase)
 
-- [ ] **BE-01**: Supabase Postgres에 설계 스케치에 맞는 `bundles`, `bundle_snapshots`, `bundle_lineage` 및 관련 테이블이 마이그레이션으로 존재한다.
-- [ ] **BE-02**: Supabase Storage에 번들 아카이브가 보관되며 **쓰기는 서버(API)만** 수행한다.
-- [ ] **API-01**: 인증된 사용자는 Vercel API를 통해 번들을 업로드할 수 있고 서버는 manifest·허용 규칙을 검증한다.
-- [ ] **API-02**: 인증된 사용자는 자신의 private 번들 목록 조회 및 다운로드가 가능하다.
-- [ ] **SEC-01**: DB RLS(또는 동등)로 타인 private 메타데이터 접근이 불가하다.
+- [x] **BE-01**: Supabase Postgres에 설계 스케치에 맞는 `bundles`, `bundle_snapshots`, `bundle_lineage` 및 관련 테이블이 마이그레이션으로 존재한다.
+- [x] **BE-02**: 번들 아카이브(zip)는 **Cloudflare R2**에 보관되며 **쓰기는 서버(API)만**(S3 API 자격 증명) 수행한다.
+- [x] **API-01**: 인증된 사용자는 Vercel API를 통해 번들을 업로드할 수 있고 서버는 manifest·허용 규칙을 검증한다.
+- [x] **API-02**: 인증된 사용자는 자신의 private 번들 목록 조회 및 다운로드가 가능하다.
+- [x] **SEC-01**: DB RLS(또는 동등)로 타인 private 메타데이터 접근이 불가하다.
 
 ### Sync & devices
 
@@ -60,7 +60,7 @@
 | Import 후 원본과 실시간 동기화 | 제품 정체성·재현성 — 스펙 비목표 |
 | GitHub PR·머지 협업 | 초기 비목표 |
 | Cursor/Codex 풀 네이티브 exporter(초기) | 코어+스펙 우선 정책 |
-| 클라이언트 직접 Storage 업로드 | API 경유만 — 사용자 결정 |
+| 클라이언트 직접 R2 업로드 | API 경유만 — 사용자 결정 |
 
 ## Traceability
 
@@ -74,11 +74,11 @@
 | CLI-02 | Phase 1 | Complete |
 | CLI-03 | Phase 1 | Complete |
 | CLI-04 | Phase 1 | Complete |
-| BE-01 | Phase 2 | Pending |
-| BE-02 | Phase 2 | Pending |
-| API-01 | Phase 2 | Pending |
-| API-02 | Phase 2 | Pending |
-| SEC-01 | Phase 2 | Pending |
+| BE-01 | Phase 2 | Complete |
+| BE-02 | Phase 2 | Complete |
+| API-01 | Phase 2 | Complete |
+| API-02 | Phase 2 | Complete |
+| SEC-01 | Phase 2 | Complete |
 | SYNC-01 | Phase 3 | Pending |
 | SYNC-02 | Phase 3 | Pending |
 | PUB-01 | Phase 4 | Pending |
@@ -97,4 +97,4 @@
 ---
 
 *Requirements defined: 2026-03-31*  
-*Last updated: 2026-03-31 after initial definition*
+*Last updated: 2026-03-31 — Phase 2 requirements marked complete (code + planning closure)*

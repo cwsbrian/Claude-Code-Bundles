@@ -2,8 +2,7 @@ import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { pack } from "../src/lib/pack.js";
-import { lintArchive } from "../src/lib/lint.js";
+import { lintArchive, pack } from "@claude-code-bundles/core";
 
 async function buildArchiveFixture(visibility: "public" | "private"): Promise<{
   archivePath: string;
@@ -50,7 +49,7 @@ describe("lintArchive", () => {
 
     expect(result.visibility).toBe("public");
     expect(result.blocking).toBe(true);
-    expect(result.findings.length).toBeGreaterThan(0);
+    expect(result.findings.length).toBeGreaterThan(0);1
   });
 
   it("warns private bundle and does not block on same patterns", async () => {

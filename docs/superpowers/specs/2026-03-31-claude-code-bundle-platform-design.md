@@ -8,9 +8,9 @@
 |------|------|
 | 문서 독자 | 본인 실행용 (체크리스트 중심) |
 | 일정 | 기간 고정 없음, Phase 완료 기준 |
-| 인프라 | **Vercel + Supabase** 고정 |
+| 인프라 | **Vercel** (API) + **Supabase** (Auth, Postgres) + **Cloudflare R2** (번들 바이너리, S3 호환) |
 | 멀티 AI 툴 | **Claude 우선 구현**, Cursor/Codex는 **mapping spec만** 우선 제공 |
-| Storage 업로드 | **직접 업로드(프리사인 URL 등) 없음** — API 경유 업로드만 |
+| R2 / 객체 업로드 | **직접 업로드(프리사인 URL 등) 없음** — API 경유 업로드만 |
 
 ---
 
@@ -21,7 +21,7 @@
 **성공 기준 (Phase 단위로 검증)**
 
 1. 로컬에서 bundle pack/unpack 및 Claude 적용이 재현 가능하다.
-2. Supabase에 private 번들이 백업되고, 동일 계정으로 다른 디바이스에서 복원된다.
+2. Supabase(Postgres)에 번들 메타가 기록되고 zip은 R2에 저장되며, 동일 계정으로 다른 디바이스에서 복원된다.
 3. Public 번들 import 시 **private copy**가 생기고, lineage가 스냅샷 기준으로 남는다.
 4. Public 노출 시 **Published by / Originated by** 표기가 일관된다.
 
@@ -38,8 +38,8 @@
 | 레이어 | 기술 | 역할 |
 |--------|------|------|
 | 진입점 | **Vercel** (예: Next.js, API Routes) | 인증 연동, 업로드/다운로드 API, 웹 UI(선택) |
-| 상태 | **Supabase** (Auth, Postgres, Storage) | 사용자, 번들 메타, lineage, 디바이스 설치 상태 |
-| 오브젝트 | Supabase **Storage** | 번들 아카이브, manifest 등 (**쓰기는 서버만**) |
+| 상태 | **Supabase** (Auth, Postgres) | 사용자, 번들 메타, lineage, 디바이스 설치 상태 |
+| 오브젝트 | **Cloudflare R2** (S3 API) | 번들 zip 아카이브 (**쓰기·읽기는 서버/API만**) |
 | 로컬 | **Bundle CLI** (Claude 우선) | pack / unpack / apply / sync pull·push |
 
 **포맷 전략**
@@ -59,7 +59,7 @@
 
 ## 3. 데이터 플로우
 
-1. **작성 → 백업**: 로컬 `pack` → API로 업로드 → 서버 검증 후 Storage 저장 + DB에 스냅샷/해시/메타 기록.
+1. **작성 → 백업**: 로컬 `pack` → API로 업로드 → 서버 검증 후 **R2**에 저장 + DB에 스냅샷/해시/메타 기록.
 2. **복원**: 로그인 → 내 private 목록 조회 → `sync pull` → unpack → `apply` (Claude 경로).
 3. **Public 가져오기**: 공개 번들 조회 → `import` → **새 private bundle** + `bundle_lineage` (parent, root, imported_snapshot_id) → 이후 (2)와 동일.
 4. **멀티툴**: 다운로드 산출물은 항상 **코어 번들**; Cursor/Codex 적용은 스펙상 변환 규칙만 정의.
@@ -79,10 +79,10 @@
 - hooks 등: 설치 전 경고·opt-in.
 - Public moderation: Phase 4에서 최소; 초기 **private 기본**.
 
-**Storage (확정)**
+**Object storage (확정: R2)**
 
-- 브라우저·CLI 모두 **API 경유**로만 업로드.
-- 서버가 검증 후 Storage 기록. 경로 규칙(예: `userId/...`) + 요청 주체와 DB 소유권 일치 검증.
+- 브라우저·CLI 모두 **API 경유**로만 업로드 (R2 presign 없음).
+- 서버가 검증 후 **R2 `PutObject`**. 경로 규칙(예: `userId/...`) + 요청 주체와 DB 소유권 일치 검증.
 
 ---
 
@@ -96,7 +96,7 @@
 | 복원 | 두 디바이스 시나리오: A에서 push 후 B에서 pull 동일 스냅샷 |
 | Lineage | import 체인 저장·UI/API 필드 Published by / Originated by |
 
-자동화는 Phase 1부터 **CLI 단위 테스트 + API 통합 테스트(스테이징 Supabase)** 를 목표로 둔다.
+자동화는 Phase 1부터 **CLI 단위 테스트 + API 통합 테스트(스테이징 Supabase + R2)** 를 목표로 둔다.
 
 ---
 
@@ -108,7 +108,7 @@
 |-------|------|-----------|-----------|
 | **0** | 스펙 고정 | `bundle.json` 스키마, lineage 정책, CLI 명령 모양, Cursor/Codex mapping spec 초안 | 설계 문서 승인 |
 | **1** | 로컬 번들러 MVP | pack/unpack/manifest, Claude `apply`, 시크릿 lint 초안 | 서버 없이 E2E 설치 검증 |
-| **2** | 기본 백엔드 | Supabase 스키마, Vercel API 업로드/다운로드, private 백업 | 내 번들 백업·단일 기기 복원 |
+| **2** | 기본 백엔드 | Supabase 스키마, R2 객체 저장, Vercel API 업로드/다운로드, private 백업 | 내 번들 백업·단일 기기 복원 |
 | **3** | 디바이스 동기화 | device/install 상태, pull/push 정책 | 멀티 디바이스 동일 스냅샷 복원 |
 | **4** | Public sharing | public 전환, 공유 링크, lineage 노출, 최소 moderation | marketplace 기초 |
 | **5** | 검색/발견 | 태그, 정렬, browse | public 탐색 |
@@ -118,7 +118,7 @@
 
 1. manifest + local install target 구조 확정  
 2. 로컬 pack/unpack CLI  
-3. 계정 기반 private backup API (Vercel → Supabase)  
+3. 계정 기반 private backup API (Vercel → Supabase 메타 + R2 바이너리)  
 4. 멀티 디바이스 restore 안정화 후 public 오픈  
 5. 검색·랭킹·analytics는 후순위  
 
@@ -127,12 +127,12 @@
 - manifest에 포함할 파일 타입·훅 범위  
 - 플러그인/CLI bootstrap 한 줄 명령 형태  
 - public moderation 기준  
-- 동일 snapshot Storage dedupe 여부  
+- 동일 snapshot R2/객체 dedupe 여부  
 - current snapshot 생성 시점(파일 해시 집합 규칙)
 
 ---
 
-## 7. 내가 준비할 것 (Vercel / Supabase / 공통)
+## 7. 내가 준비할 것 (Vercel / Supabase / Cloudflare R2 / 공통)
 
 한 번에 모아 둔 **준비물 체크리스트**. 값은 비밀이므로 레포에 커밋하지 말고 `.env.local` 등에만 둔다.
 
@@ -141,7 +141,8 @@
 - [ ] Vercel 계정, **팀/프로젝트 이름** 결정  
 - [ ] 이 레포(또는 생성할 앱)와 연결한 **Vercel Project**  
 - [ ] 배포 브랜치·프리뷰 정책(개인이면 기본값으로 충분)  
-- [ ] 환경 변수 슬롯 확보: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, **서버 전용** `SUPABASE_SERVICE_ROLE_KEY` (API에서 Storage/관리용 — **클라이언트 번들에 넣지 않음**)  
+- [ ] 환경 변수 슬롯 확보: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, **서버 전용** `SUPABASE_SERVICE_ROLE_KEY` (Postgres/API — **클라이언트 번들에 넣지 않음**)  
+- [ ] **R2**: `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT` 또는 `R2_ACCOUNT_ID`, `BUNDLE_STORAGE_BUCKET` (**서버 전용**)  
 - [ ] (선택) 커스텀 도메인, JWT/쿠키 도메인 정합성
 
 ### Supabase
@@ -149,9 +150,14 @@
 - [ ] 프로젝트 생성 region 선택  
 - [ ] **Auth**: 사용할 로그인 방식 (이메일, OAuth 제공자)  
 - [ ] **Database**: Phase 2+용 테이블 마이그레이션(또는 SQL) — `bundles`, `bundle_snapshots`, `bundle_lineage`, `devices`, `device_bundle_installs` 등 본 스펙 §8 엔터티 참고  
-- [ ] **Storage**: 버킷 이름, **서버에서만 쓰기** 정책(직접 업로드 불사용이므로 bucket public-write 불필요)  
-- [ ] **RLS**: 최소한 “본인 행만 읽기”는 DB에 적용; Storage는 주로 서버 키로만 접근  
-- [ ] 연결 문자열·anon key·service role key를 Vercel 환경 변수에 등록
+- [ ] **RLS**: 최소한 “본인 행만 읽기”는 DB에 적용  
+- [ ] 연결 문자열·anon key·service role key를 Vercel 환경 변수에 등록  
+
+### Cloudflare R2
+
+- [ ] R2 버킷 생성 (`BUNDLE_STORAGE_BUCKET`와 동일 이름 권장)  
+- [ ] S3 API용 **R2 API 토큰** 발급 → 액세스 키 / 시크릿을 Vercel 서버 환경 변수에 등록  
+- [ ] 직접 브라우저 업로드 금지 유지 — **API만** `PutObject`/`GetObject`
 
 ### 공통·레포
 

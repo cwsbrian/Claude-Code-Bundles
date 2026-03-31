@@ -17,7 +17,7 @@
 |------|---------------------------|
 | Vercel app shape | Next.js App Router under `apps/web`, Route Handlers for API |
 | Auth | Supabase Auth; Bearer token to API; service role server-only |
-| Upload encoding | multipart zip archive to API (no direct Storage from client) |
+| Upload encoding | multipart zip archive to API (no direct R2 from client) |
 | Manifest validation | Same JSON Schema; share `src/lib/manifest-validate.ts` when possible |
 | Server secret scan | Reject high-confidence secrets on upload; structured 4xx + guidance |
 | Duplicate uploads | Idempotent by normalized snapshot hash |

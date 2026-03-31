@@ -47,9 +47,39 @@ Runs local-only checks for secrets/risky patterns and enforces visibility-sensit
 
 Validates manifest structure and schema compatibility (`schema_version` and required fields) before pack/install flows.
 
+## Remote (Phase 2, D-16)
+
+Authenticated calls to the deployed **Next.js** bundle API. Env vars (canonical names):
+
+- **`CCB_API_URL`** — origin of the app (e.g. `https://app.example.com` or `http://localhost:3000`)
+- **`CCB_ACCESS_TOKEN`** — Supabase **user** JWT (`Authorization: Bearer` on every request)
+
+`SUPABASE_ACCESS_TOKEN` is accepted as an alias for the token only where documented in CLI help.
+
+### `remote upload`
+
+- **`--archive` / `-a`** — path to `.zip`
+- **`--manifest` / `-m`** — optional `bundle.json`; default is `bundle.json` next to the zip
+- **`--api-url`** — overrides `CCB_API_URL`
+- **`--token` / `-t`** — overrides `CCB_ACCESS_TOKEN`
+
+Multipart fields **`manifest`** (JSON) and **`archive`** (zip) must match the server.
+
+### `remote list`
+
+JSON list of the caller’s bundles and snapshots (`GET /api/bundles`).
+
+### `remote download`
+
+- **`--bundle` / `-b`** — internal bundle UUID from upload/list response
+- **`--snapshot` / `-s`** — snapshot UUID
+- **`--out` / `-o`** — destination path for the zip
+
+Streams **`GET /api/bundles/:bundleId/snapshots/:snapshotId/download`**.
+
 ## Reserved for Future Phases
 
-The following names are reserved for Phase 2+ remote sync semantics and are not implemented in Phase 1:
+The following names are reserved for later remote sync semantics:
 
 - `sync`
 - `pull`

@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/schemas/**/*.json",
+      "{workspaceRoot}/tsconfig.base.json"
+    ],
+    "production": ["default"]
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    }
+  },
+  "plugins": [],
+  "projects": {
+    "core": "packages/core",
+    "cli": "packages/cli",
+    "web": "apps/web",
+    "workspace": "."
+  }
+}

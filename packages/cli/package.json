@@ -1,0 +1,12 @@
+{
+  "name": "@claude-code-bundles/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ccb": "./dist/index.js"
+  },
+  "dependencies": {
+    "@claude-code-bundles/core": "*"
+  }
+}

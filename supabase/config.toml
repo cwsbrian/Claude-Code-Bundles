@@ -1,0 +1,8 @@
+# Supabase CLI local config (optional). Run: supabase start
+project_id = "claude-code-bundles-local"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15

@@ -14,7 +14,7 @@ async function runCli(
 ): Promise<{ code: number; stdout: string; stderr: string }> {
   return new Promise((resolve) => {
     const tsxBin = path.join(repoRoot, "node_modules", ".bin", "tsx");
-    const cliPath = path.join(repoRoot, "src", "cli", "index.ts");
+    const cliPath = path.join(repoRoot, "packages", "cli", "src", "index.ts");
     const child = spawn(tsxBin, [cliPath, ...args], {
       cwd,
       env,

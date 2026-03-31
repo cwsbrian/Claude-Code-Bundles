@@ -2,12 +2,12 @@
 
 ## Overview
 
-설계 스펙을 단일 출처로 두고, **로컬 번들 MVP → Supabase 백업 → 멀티 디바이스 → 공개·lineage → 탐색·운영 베타** 순으로 쌓는다. Phase 수는 coarse 설정에 맞춰 **5개 실행 Phase**로 묶었고(스펙의 Phase 0–6을 병합), 완료는 일정이 아니라 **Phase별 완료 기준**으로 판단한다.
+설계 스펙을 단일 출처로 두고, **로컬 번들 MVP → Supabase 메타 + R2 백업 → 멀티 디바이스 → 공개·lineage → 탐색·운영 베타** 순으로 쌓는다. Phase 수는 coarse 설정에 맞춰 **5개 실행 Phase**로 묶었고(스펙의 Phase 0–6을 병합), 완료는 일정이 아니라 **Phase별 완료 기준**으로 판단한다.
 
 ## Phases
 
-- [ ] **Phase 1: Spec + local bundle MVP** — 스키마·정책·매핑 문서 고정 + Claude용 pack/unpack/apply/lint, 서버 없이 E2E
-- [ ] **Phase 2: Backend + private backup** — Supabase 스키마·Storage(서버 쓰기), Vercel API 업로드/다운로드, RLS
+- [x] **Phase 1: Spec + local bundle MVP** — 스키마·정책·매핑 문서 고정 + Claude용 pack/unpack/apply/lint, 서버 없이 E2E
+- [x] **Phase 2: Backend + private backup** — Supabase 스키마·RLS, **R2**에 zip(서버만 쓰기), Vercel API 업로드/다운로드
 - [ ] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원
 - [ ] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation
 - [ ] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측
@@ -33,9 +33,9 @@
 
 Plans:
 
-- [ ] [01-01-PLAN.md](phases/01-spec-local-bundle-mvp/01-01-PLAN.md) — 스키마·정책·CLI·툴 매핑 문서 고정 및 schema_version 정책 (SPEC-01–03, TOOL-01)
-- [ ] [01-02-PLAN.md](phases/01-spec-local-bundle-mvp/01-02-PLAN.md) — pack/unpack + 정규화 스냅샷 해시 + golden fixture (CLI-01, CLI-02)
-- [ ] [01-03-PLAN.md](phases/01-spec-local-bundle-mvp/01-03-PLAN.md) — apply/install/list/lint/create + 로컬 E2E (CLI-03, CLI-04)
+- [x] [01-01-PLAN.md](phases/01-spec-local-bundle-mvp/01-01-PLAN.md) — 스키마·정책·CLI·툴 매핑 문서 고정 및 schema_version 정책 (SPEC-01–03, TOOL-01)
+- [x] [01-02-PLAN.md](phases/01-spec-local-bundle-mvp/01-02-PLAN.md) — pack/unpack + 정규화 스냅샷 해시 + golden fixture (CLI-01, CLI-02)
+- [x] [01-03-PLAN.md](phases/01-spec-local-bundle-mvp/01-03-PLAN.md) — apply/install/list/lint/create + 로컬 E2E (CLI-03, CLI-04)
 
 ### Phase 2: Backend + private backup
 
@@ -48,7 +48,7 @@ Plans:
 **Success Criteria**:
 
 1. 인증된 사용자만 업로드·자신의 private 목록 조회가 가능하다.
-2. 업로드는 API 경유만 되며 Storage에 아카이브가 저장된다.
+2. 업로드는 API 경유만 되며 **R2**에 아카이브가 저장된다.
 3. manifest 검증 실패 시 거부와 수정 가이드가 반환된다.
 4. RLS(또는 동등)로 타인 private 메타에 접근할 수 없다.
 
@@ -56,9 +56,9 @@ Plans:
 
 Plans:
 
-- [ ] [02-01-PLAN.md](phases/02-backend-private-backup/02-01-PLAN.md) — Nx + `packages/core`/`packages/cli` 이전 + Supabase 마이그레이션·Storage·RLS (BE-01, BE-02, SEC-01)
-- [ ] [02-02-PLAN.md](phases/02-backend-private-backup/02-02-PLAN.md) — `apps/web` 업로드/목록/다운로드 API + manifest·서버 스캔 (API-01, API-02)
-- [ ] [02-03-PLAN.md](phases/02-backend-private-backup/02-03-PLAN.md) — `ccb remote` + 단일 기기 백업→복원 E2E + SEC-01 부정 경로
+- [x] [02-01-PLAN.md](phases/02-backend-private-backup/02-01-PLAN.md) — Nx + `packages/core`/`packages/cli` 이전 + Supabase 마이그레이션·**R2 정책 문서**·RLS (BE-01, BE-02, SEC-01)
+- [x] [02-02-PLAN.md](phases/02-backend-private-backup/02-02-PLAN.md) — `apps/web` 업로드/목록/다운로드 API + manifest·서버 스캔 (API-01, API-02)
+- [x] [02-03-PLAN.md](phases/02-backend-private-backup/02-03-PLAN.md) — `ccb remote` + 단일 기기 백업→복원 E2E + SEC-01 부정 경로
 
 ### Phase 3: Multi-device sync
 
@@ -126,8 +126,8 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Spec + local MVP | 0/3 | Planning complete | - |
-| 2. Backend + backup | 0/3 | Planning complete | - |
+| 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
+| 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 0/2 | Not started | - |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |

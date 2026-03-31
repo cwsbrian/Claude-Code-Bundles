@@ -3,23 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Local CLI for Claude Code bundle pack/unpack MVP.",
+  "description": "Claude Code bundles — CLI, core library, and web/API (Nx monorepo).",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "bin": {
-    "ccb": "dist/cli/index.js"
+    "ccb": "packages/cli/dist/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "vitest run",
-    "dev": "tsx src/cli/index.ts",
-    "test:e2e": "bash scripts/e2e-local.sh"
-  },
-  "dependencies": {
-    "adm-zip": "^0.5.16",
-    "ajv": "^8.17.1"
+    "build": "npx nx run-many -t build --projects=core,cli,web",
+    "build:core": "npx nx run core:build",
+    "build:cli": "npx nx run cli:build",
+    "build:web": "npx nx run web:build",
+    "test": "npx nx run workspace:test",
+    "test:all": "npx nx run-many -t test --all",
+    "dev": "npx nx run cli:build --skip-nx-cache && node packages/cli/dist/index.js",
+    "dev:web": "npx nx run web:dev",
+    "test:e2e": "bash scripts/e2e-local.sh",
+    "test:e2e:remote": "bash scripts/e2e-backup-restore.sh"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.5.8",
     "@types/node": "^24.6.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "nx": "^21.3.11",
     "tsx": "^4.20.6",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
