@@ -166,6 +166,13 @@ export async function main(argv: string[]): Promise<void> {
       manifest,
       force: parsed.force,
     });
+    await updateRegistry({
+      bundleId: manifest.bundle_id,
+      snapshotId: `${manifest.bundle_id}@${manifest.version}`,
+      archivePath: "",
+      manifestSourcePath: path.resolve(parsed.manifestPath),
+      installedPaths: result.installedPaths,
+    });
     process.stdout.write(`Applied ${result.bundleId} to ${result.claudeRoot}\n`);
     return;
   }

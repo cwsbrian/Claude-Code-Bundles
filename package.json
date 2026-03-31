@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "dev": "tsx src/cli/index.ts"
+    "dev": "tsx src/cli/index.ts",
+    "test:e2e": "bash scripts/e2e-local.sh"
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
