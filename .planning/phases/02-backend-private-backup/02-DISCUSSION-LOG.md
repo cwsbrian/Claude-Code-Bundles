@@ -31,3 +31,9 @@ See **Claude's Discretion** subsection in `02-CONTEXT.md`.
 ## Deferred Ideas
 
 See `<deferred>` in `02-CONTEXT.md`.
+
+---
+
+## Update: 2026-03-31 (Nx)
+
+User chose **Nx monorepo**. `02-CONTEXT.md` updated (committed) with **D-01/D-02**: `apps/web`, `packages/core`, `packages/cli`. Phase 2 executable plans: `02-01`–`02-03` PLAN.md files; verifier passed.

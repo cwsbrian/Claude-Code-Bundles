@@ -52,13 +52,13 @@ Plans:
 3. manifest 검증 실패 시 거부와 수정 가이드가 반환된다.
 4. RLS(또는 동등)로 타인 private 메타에 접근할 수 없다.
 
-**Plans:** TBD
+**Plans:** 3 plans (Nx monorepo + backend; see `02-CONTEXT.md`)
 
 Plans:
 
-- [ ] 02-01: Supabase 마이그레이션·Storage 버킷·서버 전용 쓰기
-- [ ] 02-02: Vercel 업로드/다운로드 API 및 검증
-- [ ] 02-03: 단일 기기 백업→복원 E2E
+- [ ] [02-01-PLAN.md](phases/02-backend-private-backup/02-01-PLAN.md) — Nx + `packages/core`/`packages/cli` 이전 + Supabase 마이그레이션·Storage·RLS (BE-01, BE-02, SEC-01)
+- [ ] [02-02-PLAN.md](phases/02-backend-private-backup/02-02-PLAN.md) — `apps/web` 업로드/목록/다운로드 API + manifest·서버 스캔 (API-01, API-02)
+- [ ] [02-03-PLAN.md](phases/02-backend-private-backup/02-03-PLAN.md) — `ccb remote` + 단일 기기 백업→복원 E2E + SEC-01 부정 경로
 
 ### Phase 3: Multi-device sync
 
@@ -127,7 +127,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Spec + local MVP | 0/3 | Planning complete | - |
-| 2. Backend + backup | 0/3 | Not started | - |
+| 2. Backend + backup | 0/3 | Planning complete | - |
 | 3. Multi-device | 0/2 | Not started | - |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |
