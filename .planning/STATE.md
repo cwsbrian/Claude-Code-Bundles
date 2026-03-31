@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-31T19:00:58.233Z"
+stopped_at: Completed 01-spec-local-bundle-mvp-02-PLAN.md
+last_updated: "2026-03-31T19:08:32.188Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-31)
 ## Current Position
 
 Phase: 01 (spec-local-bundle-mvp) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-03-31
 
@@ -46,6 +46,7 @@ Progress: [░░░░░░░░░░] 0%
 |-------|-------|-------|----------|
 | — | — | — | — |
 | Phase 01 P01 | 2 min | 3 tasks | 5 files |
+| Phase 01-spec-local-bundle-mvp P02 | 0h 6m | 3 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -57,6 +58,8 @@ Init: Vercel+Supabase, API-only upload, Claude-first multi-tool, snapshot lineag
 - [Phase 01]: Schema contract fixed at schema_version 1.0.0 with explicit D-01 to D-03 processor behavior.
 - [Phase 01]: Lineage policy codifies private-copy imports with no automatic upstream sync for Phase 1.
 - [Phase 01]: CLI surface includes D-12 commands with D-13 to D-16 guardrails and local-only install/list semantics.
+- [Phase 01-spec-local-bundle-mvp]: Use zip archives via adm-zip while comparing normalized snapshot hashes instead of archive bytes.
+- [Phase 01-spec-local-bundle-mvp]: Use Unicode NFC path normalization with sorted path+content hashing for deterministic D-05/D-06 identity.
 
 ### Pending Todos
 
@@ -68,6 +71,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T19:00:58.230Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-03-31T19:08:32.185Z
+Stopped at: Completed 01-spec-local-bundle-mvp-02-PLAN.md
 Resume file: None

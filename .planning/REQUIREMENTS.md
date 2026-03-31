@@ -14,8 +14,8 @@
 
 ### Local CLI (Claude-first)
 
-- [ ] **CLI-01**: 사용자는 CLI로 워크스페이스를 번들 아카이브로 pack 할 수 있다.
-- [ ] **CLI-02**: 사용자는 fixture 번들로 unpack 후 동일 스냅샷 해시(또는 명시된 동등 규칙)를 재현할 수 있다.
+- [x] **CLI-01**: 사용자는 CLI로 워크스페이스를 번들 아카이브로 pack 할 수 있다.
+- [x] **CLI-02**: 사용자는 fixture 번들로 unpack 후 동일 스냅샷 해시(또는 명시된 동등 규칙)를 재현할 수 있다.
 - [ ] **CLI-03**: 사용자는 manifest에 따라 번들을 Claude Code가 소비하는 로컬 경로에 apply 할 수 있다.
 - [ ] **CLI-04**: 번들 콘텐츠에 대한 시크릿/위험 패턴 lint(경고 또는 차단) 초안이 동작한다.
 
@@ -70,8 +70,8 @@
 | SPEC-02 | Phase 1 | Complete |
 | SPEC-03 | Phase 1 | Complete |
 | TOOL-01 | Phase 1 | Complete |
-| CLI-01 | Phase 1 | Pending |
-| CLI-02 | Phase 1 | Pending |
+| CLI-01 | Phase 1 | Complete |
+| CLI-02 | Phase 1 | Complete |
 | CLI-03 | Phase 1 | Pending |
 | CLI-04 | Phase 1 | Pending |
 | BE-01 | Phase 2 | Pending |
