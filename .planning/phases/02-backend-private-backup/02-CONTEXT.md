@@ -14,10 +14,14 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 <decisions>
 ## Implementation Decisions
 
-### Monorepo & Vercel 진입점
+### Nx monorepo & Vercel 진입점
 
-- **D-01:** Phase 2에서 Vercel 배포 단위는 **`apps/web`** 아래 **Next.js(App Router)** 로 둔다. HTTP API는 **`app/api/**/route.ts`** Route Handlers로 구현한다(설계 문서의 “Vercel 예: Next.js, API Routes”와 일치).
-- **D-02:** 기존 npm 패키지 루트(`claude-code-bundles`, `ccb` CLI)는 유지한다. 워크스페이스는 **npm workspaces** 또는 **분리 `package.json`** 중 하나로 구성하되, **CLI와 API가 동일 스키마·검증 로직을 공유**할 수 있어야 한다(아래 D-12).
+- **D-01:** 레포는 **Nx monorepo**로 정리한다. 루트에 `nx.json`·`package.json`(workspaces)을 두고, **최소** 다음 프로젝트 경계를 사용한다:
+  - **`apps/web`** — Next.js **App Router** + **Route Handlers** (`app/api/**/route.ts`). Vercel 배포 단위는 이 앱이다.
+  - **`packages/core`** — 공유 도메인 로직: **manifest 검증**, **스냅샷 해시**, **lint/secret-scan** 규칙(Phase 1 `src/lib` 대응). `schemas/bundle-1.0.0.schema.json` 참조는 이 패키지 또는 루트 `schemas/` 중 하나로 **단일화**(플랜에서 경로 고정).
+  - **`packages/cli`** — **`ccb`** 실행 파일(bin): 기존 Phase 1 CLI를 이 패키지로 **이전**한다.
+- **D-02:** Phase 2 첫 물결에서 **기존 루트 `src/`·`tests/`·`package.json` bin** 을 깨지 않게 **Nx 이전(migration)** 을 완료해야 한다. 이후 모든 `build`/`test`·CI는 **Nx 타깃**(예: `nx build web`, `nx test core`)을 기준으로 문서화한다.
+- **D-02b:** (선택) **`packages/sdk`** — 웹/CLI 공용 **typed API client**(Phase 2 후반 또는 플랜에서 “필수/선택” 명시). 없으면 `apps/web`과 `packages/cli`에 최소 fetch 래퍼만 둔다.
 
 ### 인증·권한 모델
 
@@ -39,7 +43,7 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 ### 서버 측 검증·거절 UX
 
-- **D-12:** API는 업로드 시 **Phase 1과 동일한 `bundle.json` 스키마**(예: `schemas/bundle-1.0.0.schema.json`)로 **manifest 내용을 검증**한다. 구현은 **기존 `src/lib/manifest-validate.ts` 로직을 공유**하는 것을 1순위로 한다(복불 복제 시 동기화 주석 필수).
+- **D-12:** API는 업로드 시 **Phase 1과 동일한 `bundle.json` 스키마**로 **manifest 내용을 검증**한다. 구현은 **`packages/core`의 검증·스캔 모듈을 import**하는 것을 1순위로 한다(복제 금지; 한 소스만).
 - **D-13:** 아카이브 내부에 대한 **서버 측 기본 시크릿 스캔**을 수행한다(설계 §4). Phase 1 로컬 lint(D-09~D-11)와 정합되게, **high-confidence 민감 정보는 업로드 항상 거절**(Phase 2에서는 **visibility 무관**하게 서버에서 차단 — 운영 단순화); 응답 본문에 **수정 가이드** 문구를 포함한다(API-01).
 - **D-14:** manifest/스키마/스캔 실패 시 **HTTP 4xx** + 구조화된 에러(필드·코드)를 반환한다.
 
@@ -49,11 +53,11 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 ### CLI와의 연동(Phase 2 최소)
 
-- **D-16:** Phase 2 완료 시점에 **로컬 CLI에서 인증 세션을 사용해 API로 업로드**할 수 있는 경로가 있어야 한다(설계 데이터 플로 “pack → API 업로드”). 서브커맨드 이름은 **`ccb`(또는 `ccb remote`) 하위**로 두되, 정확한 이름·플래그는 PLAN에서 확정한다.
+- **D-16:** Phase 2 완료 시점에 **`packages/cli`의 `ccb`** 가 **인증 세션을 사용해 `apps/web` API로 업로드**할 수 있어야 한다. 서브커맨드 이름은 **`remote upload`** 또는 동등한 `ccb` 하위로 PLAN에서 고정한다.
 
 ### Claude's Discretion
 
-- Next.js·Supabase 클라이언트 라이브러리 버전, 마이그레이션 도구(supabase CLI vs prisma 등), 통합 테스트 러너에서 스테이징 프로젝트 시드 방법, 다운로드 구현(스트림 vs signed URL), 에러 JSON 스키마 세부 필드.
+- Nx 플러그인(`@nx/next` 등) 정확 버전, `pnpm` vs `npm` lockfile 정책, `packages/core`에 스키마 JSON을 **복사 vs 루트 참조** 중 구체 방식, Next.js·Supabase 클라이언트 버전, 마이그레이션 도구(Supabase CLI vs Prisma 등), 통합 테스트에서 스테이징 시드 방법, 다운로드(스트림 vs signed URL), 에러 JSON 세부 필드.
 
 ### Folded Todos
 
@@ -78,8 +82,9 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 - `docs/spec/bundle-json.md` — normative manifest
 - `schemas/bundle-1.0.0.schema.json` — machine-readable schema
 - `docs/spec/lineage-policy.md` — lineage 필드(Phase 2 테이블 설계 시 참조)
-- `src/lib/manifest-validate.ts` — 서버 검증 공유 1선 후보
-- `src/lib/snapshot-hash.ts` — 스냅샷 id/멱등 정책(D-11)과 정합
+- `src/lib/manifest-validate.ts` — **이전 전** Phase 1 검증(→ `packages/core`로 이동)
+- `src/lib/snapshot-hash.ts` — **이전 전** 해시(→ `packages/core`)
+- `nx.json` — Phase 2 이후 **Nx 빌드·테스트** 진실 공급원(플랜에서 생성·문서화)
 
 ### Design spec
 
@@ -92,17 +97,18 @@ Phase 2는 ROADMAP·REQUIREMENTS의 **BE-01, BE-02, API-01, API-02, SEC-01** 및
 
 ### Reusable Assets
 
-- `src/cli/index.ts` 및 `src/lib/*` — Phase 1 **pack/unpack**, **manifest 검증**, **스냅샷 해시**, **lint 규칙 개념**; Phase 2 API·업로드 파이프라인이 같은 규칙을 재사용해야 한다.
-- `schemas/bundle-1.0.0.schema.json` — 서버 manifest 검증의 단일 기준.
+- **현재 루트** `src/cli/index.ts`, `src/lib/*` — Nx 이전 후 **`packages/cli`** / **`packages/core`** 로 옮길 Phase 1 자산.
+- `schemas/bundle-1.0.0.schema.json` — manifest 검증 단일 기준(위치는 플랜에서 `core` 병입 vs 루트 유지 중 확정).
 
 ### Established Patterns
 
-- TypeScript + Vitest + Node `type: module` 단일 패키지; Phase 2에서 monorepo로 확장 시 타입스크립트 경로·빌드 일관성 유지.
+- **Phase 2 목표 패턴:** Nx + TypeScript; `nx build|test`로 `web` / `core` / `cli` 연쇄.
 
 ### Integration Points
 
-- 향후 CLI `upload`/`remote` 명령이 **Vercel `apps/web` API** 를 호출.
-- Supabase Auth 세션 ↔ API Bearer 검증 ↔ service role로 Storage/DB.
+- `packages/cli` → `apps/web` API (upload/list/download).
+- `apps/web` Route Handlers → `packages/core` (validate, snapshot id, server lint).
+- Supabase Auth ↔ Bearer ↔ service role Storage/DB.
 
 </code_context>
 
