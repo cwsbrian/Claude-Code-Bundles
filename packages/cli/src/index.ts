@@ -106,8 +106,8 @@ function printUsage(): void {
       "  ccb remote upload --archive <zip> [--manifest] [--api-url] [--token]",
       "  ccb remote list [--api-url] [--token]",
       "  ccb remote download --bundle <uuid> --snapshot <uuid> --out <file.zip> [--api-url] [--token]",
-      "  ccb pull    (Phase 3 — coming soon)",
-      "  ccb status  (Phase 3 — coming soon)",
+      "  ccb pull [--api-url] [--token]",
+      "  ccb status [--api-url] [--token]",
     ].join("\n"),
   );
 }
@@ -300,6 +300,18 @@ export async function main(argv: string[]): Promise<void> {
     } else {
       process.stdout.write("Lint passed.\n");
     }
+    return;
+  }
+
+  if (command === "pull") {
+    const pull = await import("./pull.js");
+    await pull.runPull(args);
+    return;
+  }
+
+  if (command === "status") {
+    const status = await import("./status.js");
+    await status.runStatus(args);
     return;
   }
 
