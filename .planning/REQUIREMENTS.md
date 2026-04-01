@@ -29,7 +29,7 @@
 
 ### Sync & devices
 
-- [ ] **SYNC-01**: 디바이스 등록 및 `device_bundle_installs` 수준의 설치 상태가 기록될 수 있다.
+- [x] **SYNC-01**: 디바이스 등록 및 `device_bundle_installs` 수준의 설치 상태가 기록될 수 있다.
 - [ ] **SYNC-02**: 두 번째 디바이스에서 동일 계정으로 pull하여 동일 스냅샷을 복원할 수 있다.
 
 ### Public sharing & lineage
@@ -79,7 +79,7 @@
 | API-01 | Phase 2 | Complete |
 | API-02 | Phase 2 | Complete |
 | SEC-01 | Phase 2 | Complete |
-| SYNC-01 | Phase 3 | Pending |
+| SYNC-01 | Phase 3 | Complete |
 | SYNC-02 | Phase 3 | Pending |
 | PUB-01 | Phase 4 | Pending |
 | PUB-02 | Phase 4 | Pending |

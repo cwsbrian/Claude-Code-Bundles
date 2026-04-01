@@ -73,7 +73,7 @@ Plans:
 1. 계정 인증(`ccb login`)으로 기기를 식별하고, 로컬 레지스트리에 설치 상태가 기록된다.
 2. 기기 A에서 백업한 스냅샷을 기기 B에서 `ccb pull`로 동일하게 복원한다.
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 
@@ -128,6 +128,6 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
-| 3. Multi-device | 0/2 | Planned | - |
+| 3. Multi-device | 1/2 | In Progress|  |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |
