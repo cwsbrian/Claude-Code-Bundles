@@ -7,6 +7,9 @@
     "ccb": "./dist/index.js"
   },
   "dependencies": {
-    "@claude-code-bundles/core": "*"
+    "@claude-code-bundles/core": "*",
+    "@inquirer/prompts": "^8.3.2",
+    "@supabase/supabase-js": "^2.101.1",
+    "open": "^11.0.0"
   }
 }
