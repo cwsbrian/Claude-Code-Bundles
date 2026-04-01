@@ -83,7 +83,7 @@ Plans:
 
 ### Phase 4: Public sharing + lineage
 
-**Goal:** 공개·수입·출처 표기가 스펙과一致한다.
+**Goal:** 공개·수입·출처 표기가 스펙과 일치한다.
 
 **Depends on:** Phase 3
 
@@ -96,12 +96,13 @@ Plans:
 3. Published by / Originated by가 사용자에게 보인다.
 4. 최소 unpublish/숨김이 가능하다.
 
-**Plans:** TBD
+**Plans:** 3 plans
 
 Plans:
 
-- [ ] 04-01: publish/import API 및 lineage 저장
-- [ ] 04-02: 최소 노출(웹 또는 CLI) + moderation 스텁
+- [ ] [04-01-PLAN.md](phases/04-public-sharing-lineage/04-01-PLAN.md) — DB migration (profiles, publish_records, RLS) + R2 copy/delete utils + Publish API (PUB-01)
+- [ ] [04-02-PLAN.md](phases/04-public-sharing-lineage/04-02-PLAN.md) — Public read API + Import API + Delete API (PUB-02, PUB-03, MOD-01)
+- [ ] [04-03-PLAN.md](phases/04-public-sharing-lineage/04-03-PLAN.md) — CLI commands: publish, import, unpublish, delete + index.ts wiring
 
 ### Phase 5: Discovery + operational beta
 
@@ -149,6 +150,6 @@ Plans:
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
-| 4. Public + lineage | 0/2 | Not started | - |
+| 4. Public + lineage | 0/3 | Planned | - |
 | 5. Discovery + beta | 0/2 | Not started | - |
 | 6. Claude Code integration | 0/1 | Not started | - |
