@@ -93,6 +93,8 @@ function printUsage(): void {
   console.error(
     [
       "Usage:",
+      "  ccb login [--supabase-url] [--supabase-anon-key] [--api-url]",
+      "  ccb logout",
       "  ccb create",
       "  ccb pack --manifest <path> --out <archive>",
       "  ccb unpack --archive <path> --out <dir>",
@@ -104,6 +106,8 @@ function printUsage(): void {
       "  ccb remote upload --archive <zip> [--manifest] [--api-url] [--token]",
       "  ccb remote list [--api-url] [--token]",
       "  ccb remote download --bundle <uuid> --snapshot <uuid> --out <file.zip> [--api-url] [--token]",
+      "  ccb pull    (Phase 3 — coming soon)",
+      "  ccb status  (Phase 3 — coming soon)",
     ].join("\n"),
   );
 }
@@ -114,6 +118,34 @@ export async function main(argv: string[]): Promise<void> {
   if (!command) {
     printUsage();
     process.exitCode = 1;
+    return;
+  }
+
+  if (command === "login") {
+    const login = await import("./login.js");
+    const supabaseUrl =
+      getArgValue(args, "--supabase-url") ??
+      process.env.SUPABASE_URL ??
+      process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey =
+      getArgValue(args, "--supabase-anon-key") ??
+      process.env.SUPABASE_ANON_KEY ??
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const apiUrl =
+      getArgValue(args, "--api-url") ??
+      process.env.CCB_API_URL ??
+      process.env.NEXT_PUBLIC_SITE_URL;
+    if (!supabaseUrl) throw new Error("Set --supabase-url or SUPABASE_URL env var.");
+    if (!supabaseAnonKey) throw new Error("Set --supabase-anon-key or SUPABASE_ANON_KEY env var.");
+    if (!apiUrl) throw new Error("Set --api-url or CCB_API_URL env var.");
+    await login.runLogin({ supabaseUrl, supabaseAnonKey, apiUrl });
+    return;
+  }
+
+  if (command === "logout") {
+    const { clearAuth } = await import("./auth-store.js");
+    await clearAuth();
+    process.stdout.write("Logged out.\n");
     return;
   }
 

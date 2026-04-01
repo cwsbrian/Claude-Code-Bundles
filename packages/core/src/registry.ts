@@ -5,6 +5,8 @@ import path from "node:path";
 export type RegistryEntry = {
   bundleId: string;
   snapshotId: string;
+  /** Optional normalized snapshot hash for server comparison (D-05/D-07) */
+  snapshotHash?: string;
   archivePath: string;
   manifestSourcePath: string;
   installedPaths: string[];

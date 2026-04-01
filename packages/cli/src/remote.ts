@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { loadAuth, saveAuth } from "./auth-store.js";
 
 export type RemoteApiContext = {
   apiUrl: string;
@@ -182,32 +183,75 @@ export async function runRemoteUploadCli(args: string[]): Promise<void> {
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 
-function resolveApiContext(args: string[]): RemoteApiContext {
-  const apiUrl =
-    getFlag(args, "--api-url") ??
-    process.env.CCB_API_URL ??
-    process.env.NEXT_PUBLIC_SITE_URL;
-  const token =
-    getFlag(args, "--token", "-t") ??
-    process.env.CCB_ACCESS_TOKEN ??
-    process.env.SUPABASE_ACCESS_TOKEN;
+export async function resolveApiContext(args: string[]): Promise<RemoteApiContext> {
+  // Priority 1: CLI flags
+  const flagUrl = getFlag(args, "--api-url");
+  const flagToken = getFlag(args, "--token", "-t");
+
+  // Priority 2: env vars
+  const envUrl = process.env.CCB_API_URL ?? process.env.NEXT_PUBLIC_SITE_URL;
+  const envToken =
+    process.env.CCB_ACCESS_TOKEN ?? process.env.SUPABASE_ACCESS_TOKEN;
+
+  // Priority 3: stored login token
+  const stored = await loadAuth();
+
+  const apiUrl = flagUrl ?? envUrl ?? stored?.api_url;
+
+  let token = flagToken ?? envToken ?? stored?.access_token;
+
+  // If using stored token and it has expired, attempt refresh
+  if (
+    !flagToken &&
+    !envToken &&
+    stored &&
+    token === stored.access_token &&
+    stored.expires_at < Date.now() / 1000
+  ) {
+    const { createClient } = await import("@supabase/supabase-js");
+    const sb = createClient(stored.supabase_url, stored.supabase_anon_key, {
+      auth: { persistSession: false },
+    });
+    const { data, error } = await sb.auth.refreshSession({
+      refresh_token: stored.refresh_token,
+    });
+    if (error || !data.session) {
+      throw new Error(
+        "Session expired. Run `ccb login` to re-authenticate.",
+      );
+    }
+    await saveAuth({
+      access_token: data.session.access_token,
+      refresh_token: data.session.refresh_token,
+      expires_at: data.session.expires_at ?? 0,
+      api_url: stored.api_url,
+      supabase_url: stored.supabase_url,
+      supabase_anon_key: stored.supabase_anon_key,
+    });
+    token = data.session.access_token;
+  }
+
   if (!apiUrl) {
-    throw new Error("Set --api-url or CCB_API_URL (or NEXT_PUBLIC_SITE_URL).");
+    throw new Error(
+      "Set --api-url, CCB_API_URL, or run `ccb login`.",
+    );
   }
   if (!token) {
-    throw new Error("Set --token or CCB_ACCESS_TOKEN (Supabase JWT).");
+    throw new Error(
+      "Set --token, CCB_ACCESS_TOKEN, or run `ccb login`.",
+    );
   }
   return { apiUrl, token };
 }
 
 export async function runRemoteListCli(args: string[]): Promise<void> {
-  const ctx = resolveApiContext(args);
+  const ctx = await resolveApiContext(args);
   const data = await listRemoteBundles(ctx);
   process.stdout.write(`${JSON.stringify(data, null, 2)}\n`);
 }
 
 export async function runRemoteDownloadCli(args: string[]): Promise<void> {
-  const ctx = resolveApiContext(args);
+  const ctx = await resolveApiContext(args);
   const bundleId = getFlag(args, "--bundle", "-b");
   const snapshotId = getFlag(args, "--snapshot", "-s");
   const outPath = getFlag(args, "--out", "-o");
