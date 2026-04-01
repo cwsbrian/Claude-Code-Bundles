@@ -8,7 +8,7 @@
 
 - [x] **Phase 1: Spec + local bundle MVP** — 스키마·정책·매핑 문서 고정 + Claude용 pack/unpack/apply/lint, 서버 없이 E2E
 - [x] **Phase 2: Backend + private backup** — Supabase 스키마·RLS, **R2**에 zip(서버만 쓰기), Vercel API 업로드/다운로드
-- [ ] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원
+- [x] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원 (completed 2026-04-01)
 - [ ] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation
 - [ ] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측
 
@@ -73,7 +73,7 @@ Plans:
 1. 계정 인증(`ccb login`)으로 기기를 식별하고, 로컬 레지스트리에 설치 상태가 기록된다.
 2. 기기 A에서 백업한 스냅샷을 기기 B에서 `ccb pull`로 동일하게 복원한다.
 
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 
@@ -128,6 +128,6 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
-| 3. Multi-device | 1/2 | In Progress|  |
+| 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |

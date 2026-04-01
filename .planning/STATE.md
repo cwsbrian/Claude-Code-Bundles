@@ -2,14 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-04-01T18:02:20.882Z"
+status: verifying
+stopped_at: Completed 03-02-PLAN.md — Phase 3 complete
+last_updated: "2026-04-01T18:07:15.661Z"
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 7
-  percent: 40
+  completed_plans: 8
+  percent: 88
 ---
 
 # Project State
@@ -24,12 +25,12 @@ See: `.planning/PROJECT.md`
 
 ## Current Position
 
-Phase: 03 (multi-device-sync) — EXECUTING
-Plan: 2 of 2
+Phase: 03 (multi-device-sync) — COMPLETE
+Plan: 2 of 2 (all done)
 
-Status: Ready to execute
+Status: Phase 3 complete — ready for verification
 
-Progress: `[█████████░] 88%` (7 of 8 plans complete — 2 phases fully done, Phase 3 in progress)
+Progress: `[██████████] 100%` (8 of 8 plans complete — Phase 1, 2, 3 fully done)
 
 ## Verification (2026-03-31)
 
@@ -46,13 +47,15 @@ Progress: `[█████████░] 88%` (7 of 8 plans complete — 2 ph
 ### Pending Todos
 
 - Phase 3: `03-01` COMPLETE — auth-store, login, unified auth resolution done
-- Phase 3: `03-02` next — pull/status commands
+- Phase 3: `03-02` COMPLETE — ccb pull + ccb status commands
 
-### Phase 3 Decisions (03-01)
+### Phase 3 Decisions (03-01 + 03-02)
 
 - Store `api_url` in auth.json alongside tokens so `ccb remote` works without env vars after login
 - `resolveApiContext` made exported+async to enable reuse in pull/status commands (03-02)
 - `snapshotHash` added as optional field in `RegistryEntry` for backward compat with existing registry entries
+- Used rb.id (UUID) for downloadSnapshotToFile API call, public_bundle_id as registry key — matches server API and local registry conventions
+- `status.ts` falls back to snapshotId when snapshotHash absent for backward compat with pre-plan-01 registry entries
 
 ### Blockers/Concerns
 
@@ -60,7 +63,7 @@ Progress: `[█████████░] 88%` (7 of 8 plans complete — 2 ph
 
 ## Session Continuity
 
-Last session: 2026-04-01 — Completed 03-01 (CLI auth infrastructure)
-Stopped at: Phase 03 Plan 02 (ccb pull + ccb status)
+Last session: 2026-04-01T18:07:15.658Z
+Stopped at: Completed 03-02-PLAN.md — Phase 3 complete
 
-Resume: execute `03-02-PLAN.md` for pull/status commands.
+Resume: Phase 3 complete. Next is Phase 4 (public sharing) when ready.
