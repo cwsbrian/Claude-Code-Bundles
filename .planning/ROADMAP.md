@@ -70,15 +70,15 @@ Plans:
 
 **Success Criteria**:
 
-1. 디바이스가 등록되고 설치 상태가 기록된다.
-2. 기기 A에서 백업한 스냅샷을 기기 B에서 pull해 동일하게 복원한다.
+1. 계정 인증(`ccb login`)으로 기기를 식별하고, 로컬 레지스트리에 설치 상태가 기록된다.
+2. 기기 A에서 백업한 스냅샷을 기기 B에서 `ccb pull`로 동일하게 복원한다.
 
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
 
-- [ ] 03-01: devices / device_bundle_installs API·모델
-- [ ] 03-02: pull 정책(동일 스냅샷 skip 등) 및 통합 테스트
+- [ ] [03-01-PLAN.md](phases/03-multi-device-sync/03-01-PLAN.md) — `ccb login` OAuth PKCE + auth-store + 통합 인증 해석 + 레지스트리 snapshotHash (SYNC-01)
+- [ ] [03-02-PLAN.md](phases/03-multi-device-sync/03-02-PLAN.md) — `ccb pull` 인터랙티브 동기화 + `ccb status` 비교 (SYNC-02)
 
 ### Phase 4: Public sharing + lineage
 
@@ -128,6 +128,6 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
-| 3. Multi-device | 0/2 | Not started | - |
+| 3. Multi-device | 0/2 | Planned | - |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |
