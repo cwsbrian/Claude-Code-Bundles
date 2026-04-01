@@ -26,7 +26,8 @@ export async function GET(request: Request) {
       `,
       )
       .eq("owner_user_id", user.id)
-      .order("updated_at", { ascending: false });
+      .order("updated_at", { ascending: false })
+      .order("created_at", { ascending: false, referencedTable: "bundle_snapshots" });
 
     if (error) {
       console.error(error);

@@ -45,6 +45,8 @@ export async function pack(options: PackOptions): Promise<void> {
   const zip = new AdmZip();
   const relativePaths = await collectFiles(payloadRoot, payloadRoot);
 
+  zip.addFile("bundle.json", Buffer.from(manifestRaw, "utf8"));
+
   for (const relativePath of relativePaths.sort()) {
     const absolutePath = path.resolve(payloadRoot, relativePath);
     if (absolutePath === manifestAbs || absolutePath === outArchiveAbs) {

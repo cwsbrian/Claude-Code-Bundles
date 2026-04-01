@@ -160,25 +160,12 @@ function getFlag(args: string[], ...flags: string[]): string | undefined {
 export async function runRemoteUploadCli(args: string[]): Promise<void> {
   const archivePath = getFlag(args, "--archive", "-a");
   const manifestPath = getFlag(args, "--manifest", "-m");
-  const apiUrl =
-    getFlag(args, "--api-url") ??
-    process.env.CCB_API_URL ??
-    process.env.NEXT_PUBLIC_SITE_URL;
-  const token =
-    getFlag(args, "--token", "-t") ??
-    process.env.CCB_ACCESS_TOKEN ??
-    process.env.SUPABASE_ACCESS_TOKEN;
 
   if (!archivePath) {
     throw new Error("Missing --archive <path> for remote upload.");
   }
-  if (!apiUrl) {
-    throw new Error("Set --api-url or CCB_API_URL.");
-  }
-  if (!token) {
-    throw new Error("Set --token or CCB_ACCESS_TOKEN (Supabase JWT).");
-  }
 
+  const { apiUrl, token } = await resolveApiContext(args);
   const result = await uploadArchive({ apiUrl, token, archivePath, manifestPath });
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
