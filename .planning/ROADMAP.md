@@ -11,6 +11,7 @@
 - [x] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원 (completed 2026-04-01)
 - [ ] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation
 - [ ] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측
+- [ ] **Phase 6: Claude Code integration** — CLI 대신 Claude Code 안에서 `/bundle` 슬래시 커맨드(skill)로 번들 기능 사용
 
 ## Phase Details
 
@@ -122,6 +123,25 @@ Plans:
 - [ ] 05-01: browse API·최소 UI(선택)
 - [ ] 05-02: 신고·기본 운영·관측
 
+### Phase 6: Claude Code integration
+
+**Goal:** CLI(`ccb`) 없이 Claude Code 안에서 `/bundle` skill로 번들 기능을 바로 쓴다.
+
+**Depends on:** Phase 3 (auth + pull/status 구현 완료)
+
+**Requirements:** TBD
+
+**Success Criteria**:
+
+1. Claude Code 안에서 `/bundle install`, `/bundle pull`, `/bundle status` 같은 커맨드로 번들을 관리할 수 있다.
+2. `ccb` CLI를 직접 설치하지 않아도 동작한다.
+
+**Plans:** TBD
+
+Plans:
+
+- [ ] 06-01: Claude Code skill 설계 및 구현 (`/bundle` 슬래시 커맨드)
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -131,3 +151,4 @@ Plans:
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
 | 4. Public + lineage | 0/2 | Not started | - |
 | 5. Discovery + beta | 0/2 | Not started | - |
+| 6. Claude Code integration | 0/1 | Not started | - |
