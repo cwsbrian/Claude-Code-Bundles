@@ -1,4 +1,7 @@
 import {
+  CopyObjectCommand,
+  DeleteObjectCommand,
+  DeleteObjectsCommand,
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
@@ -62,4 +65,38 @@ export async function getBundleZipObject(key: string): Promise<Buffer> {
     throw new Error("R2: empty object body");
   }
   return Buffer.from(bytes);
+}
+
+export async function copyBundleZipObject(sourceKey: string, destKey: string): Promise<void> {
+  const s3 = getS3Client();
+  const bucket = getBundleBucketName();
+  await s3.send(
+    new CopyObjectCommand({
+      Bucket: bucket,
+      CopySource: `/${bucket}/${sourceKey}`,
+      Key: destKey,
+      ContentType: "application/zip",
+    }),
+  );
+}
+
+export async function deleteBundleZipObject(key: string): Promise<void> {
+  const s3 = getS3Client();
+  await s3.send(
+    new DeleteObjectCommand({
+      Bucket: getBundleBucketName(),
+      Key: key,
+    }),
+  );
+}
+
+export async function deleteBundleZipObjects(keys: string[]): Promise<void> {
+  if (keys.length === 0) return;
+  const s3 = getS3Client();
+  await s3.send(
+    new DeleteObjectsCommand({
+      Bucket: getBundleBucketName(),
+      Delete: { Objects: keys.map((Key) => ({ Key })) },
+    }),
+  );
 }
