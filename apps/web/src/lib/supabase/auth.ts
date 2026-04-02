@@ -4,10 +4,10 @@ function getAnonClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anon =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !anon) {
     throw new Error(
-      "Missing client Supabase key: set NEXT_PUBLIC_SUPABASE_ANON_KEY or NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY",
+      "Missing client Supabase key: set NEXT_PUBLIC_SUPABASE_ANON_KEY or NEXT_PUBLIC_SUPABASE_ANON_KEY",
     );
   }
   return createClient(url, anon, {

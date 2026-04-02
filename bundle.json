@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "test",
+  "name": "test",
+  "visibility": "private",
+  "version": "0.1.0",
+  "manifest_path": "bundle.json",
+  "payload_path": "payload"
+}
