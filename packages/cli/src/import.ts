@@ -20,6 +20,7 @@ export async function runImport(args: string[]): Promise<void> {
 
   const [owner, slug] = ref.split("/", 2) as [string, string];
   const ctx = await resolveApiContext(args);
+  const nonInteractive = !process.stdin.isTTY || args.includes("--yes") || args.includes("-y");
   const apiOrigin = ctx.apiUrl.replace(/\/$/, "");
 
   // 1. Preview: fetch public bundle metadata (anonymous)
@@ -85,10 +86,16 @@ export async function runImport(args: string[]): Promise<void> {
       message: string;
       existingBundleId: string;
     };
-    const overwrite = await confirm({
-      message: `${dupBody.message} Overwrite existing bundle?`,
-      default: false,
-    });
+    let overwrite: boolean;
+    if (nonInteractive) {
+      overwrite = true;
+      process.stdout.write("Overwriting existing import (--yes).\n");
+    } else {
+      overwrite = await confirm({
+        message: `${dupBody.message} Overwrite existing bundle?`,
+        default: false,
+      });
+    }
     if (!overwrite) {
       process.stdout.write("Import skipped.\n");
       return;

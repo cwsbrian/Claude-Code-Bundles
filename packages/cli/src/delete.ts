@@ -14,6 +14,7 @@ export async function runDelete(args: string[]): Promise<void> {
   }
 
   const ctx = await resolveApiContext(args);
+  const nonInteractive = !process.stdin.isTTY || args.includes("--yes") || args.includes("-y");
   const apiOrigin = ctx.apiUrl.replace(/\/$/, "");
 
   // Resolve public_bundle_id to UUID
@@ -25,10 +26,16 @@ export async function runDelete(args: string[]): Promise<void> {
   }
 
   // Confirm hard delete (D-25, D-26)
-  const confirmed = await confirm({
-    message: `Permanently delete "${match.display_name ?? bundleIdArg}"? This cannot be undone. Local installed files are not affected.`,
-    default: false,
-  });
+  let confirmed: boolean;
+  if (nonInteractive) {
+    confirmed = true;
+    process.stdout.write("Proceeding with delete (--yes).\n");
+  } else {
+    confirmed = await confirm({
+      message: `Permanently delete "${match.display_name ?? bundleIdArg}"? This cannot be undone. Local installed files are not affected.`,
+      default: false,
+    });
+  }
 
   if (!confirmed) {
     process.stdout.write("Delete cancelled.\n");

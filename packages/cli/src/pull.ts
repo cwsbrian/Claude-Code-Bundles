@@ -28,6 +28,8 @@ export async function runPull(args: string[]): Promise<void> {
   // 1. Resolve auth (D-11)
   const ctx = await resolveApiContext(args);
 
+  const nonInteractive = !process.stdin.isTTY || args.includes("--yes") || args.includes("-y");
+
   // 2. Fetch remote bundles
   const data = await listRemoteBundles(ctx);
   const remoteBundles = (data as { bundles: RemoteBundle[] }).bundles ?? [];
@@ -84,10 +86,15 @@ export async function runPull(args: string[]): Promise<void> {
   }
 
   // 6. Present interactive checkbox (D-04)
-  const selected = await checkbox<BundleChoice>({
-    message: "Select bundles to pull:",
-    choices,
-  });
+  let selected: BundleChoice[];
+  if (nonInteractive) {
+    selected = actionable.map((c) => c.value);
+  } else {
+    selected = await checkbox<BundleChoice>({
+      message: "Select bundles to pull:",
+      choices,
+    });
+  }
 
   if (selected.length === 0) {
     process.stdout.write("No bundles selected.\n");
@@ -101,10 +108,13 @@ export async function runPull(args: string[]): Promise<void> {
     try {
       // D-06: if status is "newer on server", prompt skip/overwrite
       if (sel.status === "newer on server") {
-        const overwrite = await confirm({
-          message: `${sel.publicBundleId}: Local version differs. Overwrite?`,
-          default: true,
-        });
+        let overwrite = true;
+        if (!nonInteractive) {
+          overwrite = await confirm({
+            message: `${sel.publicBundleId}: Local version differs. Overwrite?`,
+            default: true,
+          });
+        }
         if (!overwrite) {
           process.stdout.write(`Skipped ${sel.publicBundleId}\n`);
           continue;
