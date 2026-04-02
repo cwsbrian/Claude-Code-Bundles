@@ -18,6 +18,7 @@ Claude Code(우선)에서 쓰는 **번들(bundle)** — skills, hooks, commands,
 - [x] Phase 3 (Validated in Phase 3: Multi-device sync): `ccb login` OAuth PKCE, `ccb pull` 인터랙티브 동기화, `ccb status` 비교 — 멀티 디바이스에서 동일 스냅샷 복원 검증됨.
 - [x] Phase 4 (Validated in Phase 4: Public sharing + lineage): public 전환(`ccb publish`), import→private copy+lineage(`ccb import`), Published by / Originated by API 노출, unpublish/delete(`ccb unpublish`, `ccb delete`) — PUB-01/02/03/MOD-01 완료.
 - [x] Phase 5 (Validated in Phase 5: Discovery + operational beta): `GET /api/bundles/public` browse API (sort: recent/popular/alphabetical, tag filter, cursor pagination), tag 관리(`PATCH /api/bundles/[id]` tags 배열), `POST /api/bundles/[id]/report` 신고 API (reason enum, 중복 방지), `GET /api/health` 헬스 엔드포인트, `import_count` 관측 포인트 — FND-01/OPS-01 완료.
+- [x] Phase 6 (Validated in Phase 6: Claude Code integration): non-interactive CLI mode (--yes/-y + TTY detection), browse subcommand, 4개 `/bundle:*` slash command .md 파일, `ccb setup` 자동설치, import 시 command 파일 자동설치, npm 퍼블리시 준비 — INT-01/02/03/04/05/06 완료.
 
 ### Active
 
@@ -59,7 +60,7 @@ This document evolves at phase transitions and milestone boundaries.
 
 ## Current State
 
-Phase 1–5 complete (2026-04-02): local MVP, private backup API, multi-device sync, public sharing + lineage, discovery + operational beta 완료. **다음 초점은 Phase 6** (Claude Code integration).
+Phase 1–6 complete (2026-04-02): local MVP, private backup API, multi-device sync, public sharing + lineage, discovery + operational beta, Claude Code integration 완료. `/bundle:*` slash commands로 Claude Code 안에서 번들 기능 사용 가능.
 
 **After each phase transition** (via `/gsd-transition`):
 
@@ -78,4 +79,4 @@ Phase 1–5 complete (2026-04-02): local MVP, private backup API, multi-device s
 
 ---
 
-*Last updated: 2026-04-02 — Phase 5 closure*
+*Last updated: 2026-04-02 — Phase 6 closure*
