@@ -9,6 +9,7 @@ import {
   updateRegistry,
 } from "@claude-code-bundles/core";
 import { resolveApiContext, downloadSnapshotToFile } from "./remote.js";
+import { installCommands } from "./setup.js";
 
 export async function runImport(args: string[]): Promise<void> {
   const ref = args.find((a) => !a.startsWith("-"));
@@ -144,4 +145,15 @@ export async function runImport(args: string[]): Promise<void> {
   });
 
   process.stdout.write(`Imported ${owner}/${slug} -> ${applyResult.claudeRoot}\n`);
+
+  // D-04: Auto-install command files as side-effect of import
+  try {
+    const installed = await installCommands(false);
+    if (installed.length > 0) {
+      process.stdout.write(`\nAlso installed ${installed.length} Claude Code command file(s).\n`);
+      process.stdout.write("Use /bundle:import, /bundle:pull, /bundle:status, /bundle:browse in Claude Code.\n");
+    }
+  } catch {
+    // Non-fatal: command file installation failure should not break import
+  }
 }
