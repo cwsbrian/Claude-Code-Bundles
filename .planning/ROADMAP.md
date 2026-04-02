@@ -150,6 +150,6 @@ Plans:
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
-| 4. Public + lineage | 3/3 | Complete   | 2026-04-02 |
+| 4. Public + lineage | 3/3 | Complete    | 2026-04-02 |
 | 5. Discovery + beta | 0/2 | Not started | - |
 | 6. Claude Code integration | 0/1 | Not started | - |
