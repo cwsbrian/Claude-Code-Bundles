@@ -10,7 +10,7 @@
 - [x] **Phase 2: Backend + private backup** — Supabase 스키마·RLS, **R2**에 zip(서버만 쓰기), Vercel API 업로드/다운로드
 - [x] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원 (completed 2026-04-01)
 - [x] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation (completed 2026-04-02)
-- [ ] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측
+- [x] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측 (completed 2026-04-02)
 - [ ] **Phase 6: Claude Code integration** — CLI 대신 Claude Code 안에서 `/bundle` 슬래시 커맨드(skill)로 번들 기능 사용
 
 ## Phase Details
@@ -117,7 +117,7 @@ Plans:
 1. 태그·정렬 기준으로 public 번들을 browse 할 수 있다.
 2. 신고·운영 경로가 문서와 코드에 스텁으로 존재하고 관측 포인트가 정의된다.
 
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 
@@ -151,7 +151,7 @@ Plans:
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
 | 4. Public + lineage | 3/3 | Complete    | 2026-04-02 |
-| 5. Discovery + beta | 1/2 | In Progress|  |
+| 5. Discovery + beta | 1/2 | Complete    | 2026-04-02 |
 | 6. Claude Code integration | 0/1 | Not started | - |
 | 7. Security hardening | 0/2 | Not started | - |
 
