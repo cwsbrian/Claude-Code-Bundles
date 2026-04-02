@@ -15,11 +15,12 @@ Claude Code(우선)에서 쓰는 **번들(bundle)** — skills, hooks, commands,
 - [x] Phase 1 (Validated in Phase 1: Spec + local bundle MVP): `bundle.json`(또는 동등) 스키마, lineage 정책, CLI 명령 형태, Cursor/Codex mapping spec 초안이 레포에 고정되었다.
 - [x] Phase 1 (Validated in Phase 1: Spec + local bundle MVP): 로컬 MVP(pack / unpack / manifest / Claude `apply` / 시크릿 lint 초안)가 서버 없이 E2E로 검증되었다.
 - [x] Phase 2 (Validated in Phase 2: Backend + private backup): Supabase 마이그레이션·RLS, **R2** 객체 저장, Next.js API 업로드/목록/다운로드, `ccb remote`, 단일 기기 백업→복원 및 자동화된 검증(`nx` build/test)이 레포에 반영되었다.
+- [x] Phase 3 (Validated in Phase 3: Multi-device sync): `ccb login` OAuth PKCE, `ccb pull` 인터랙티브 동기화, `ccb status` 비교 — 멀티 디바이스에서 동일 스냅샷 복원 검증됨.
+- [x] Phase 4 (Validated in Phase 4: Public sharing + lineage): public 전환(`ccb publish`), import→private copy+lineage(`ccb import`), Published by / Originated by API 노출, unpublish/delete(`ccb unpublish`, `ccb delete`) — PUB-01/02/03/MOD-01 완료.
 
 ### Active
 
-- [ ] 멀티 디바이스: 내 private 번들을 다른 기기에서 동일 스냅샷으로 pull·복원할 수 있다.
-- [ ] Public 공유: public 전환·공유·import 시 private copy·lineage 스냅샷·Published by / Originated by 표기가 일관된다.
+- [ ] (후속) 검색·발견, moderation·analytics·UX 정교화가 로드맵 후반에 올라간다.
 - [ ] (후속) 검색·발견, moderation·analytics·UX 정교화가 로드맵 후반에 올라간다.
 
 ### Out of Scope
@@ -58,7 +59,7 @@ This document evolves at phase transitions and milestone boundaries.
 
 ## Current State
 
-Phase 1–2 complete (2026-03-31): local MVP, private backup API, `ccb remote`, 그에 대한 자동화 테스트까지 반영됨. **다음 초점은 Phase 3** (multi-device sync: devices / pull).
+Phase 1–4 complete (2026-04-02): local MVP, private backup API, multi-device sync, public sharing + lineage 완료. **다음 초점은 Phase 5** (discovery + operational beta) 또는 Phase 6 (Claude Code integration).
 
 **After each phase transition** (via `/gsd-transition`):
 
@@ -77,4 +78,4 @@ Phase 1–2 complete (2026-03-31): local MVP, private backup API, `ccb remote`, 
 
 ---
 
-*Last updated: 2026-03-31 — Phase 2 closure*
+*Last updated: 2026-04-02 — Phase 4 closure*
