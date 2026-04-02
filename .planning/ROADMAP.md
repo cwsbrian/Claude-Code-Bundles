@@ -130,18 +130,19 @@ Plans:
 
 **Depends on:** Phase 3 (auth + pull/status 구현 완료)
 
-**Requirements:** TBD
+**Requirements:** INT-01, INT-02, INT-03, INT-04, INT-05, INT-06
 
 **Success Criteria**:
 
-1. Claude Code 안에서 `/bundle install`, `/bundle pull`, `/bundle status` 같은 커맨드로 번들을 관리할 수 있다.
-2. `ccb` CLI를 직접 설치하지 않아도 동작한다.
+1. Claude Code 안에서 `/bundle:import`, `/bundle:pull`, `/bundle:status`, `/bundle:browse` 커맨드로 번들을 관리할 수 있다.
+2. `ccb` CLI를 직접 설치하지 않아도 `npx` one-liner로 동작한다.
 
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
 
-- [ ] 06-01: Claude Code skill 설계 및 구현 (`/bundle` 슬래시 커맨드)
+- [ ] [06-01-PLAN.md](phases/06-claude-code-integration/06-01-PLAN.md) — Non-interactive CLI mode (--yes/TTY detection) + browse subcommand (INT-01, INT-03)
+- [ ] [06-02-PLAN.md](phases/06-claude-code-integration/06-02-PLAN.md) — Slash command .md files + ccb setup + auto-install on import + npm publish prep (INT-02, INT-04, INT-05, INT-06)
 
 ## Progress
 
@@ -152,7 +153,7 @@ Plans:
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
 | 4. Public + lineage | 3/3 | Complete    | 2026-04-02 |
 | 5. Discovery + beta | 1/2 | Complete    | 2026-04-02 |
-| 6. Claude Code integration | 0/1 | Not started | - |
+| 6. Claude Code integration | 0/2 | Not started | - |
 | 7. Security hardening | 0/2 | Not started | - |
 
 ### Phase 7: Security hardening

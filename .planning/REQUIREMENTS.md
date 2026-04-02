@@ -44,6 +44,15 @@
 - [x] **FND-01**: Public 번들을 태그·정렬 기준으로 browse 할 수 있다(기본 수준).
 - [x] **OPS-01**: 신고·기본 moderation 훅과 운영에 필요한 최소 관측(설치 성공 등)이 문서화·스텁 수준으로 존재한다.
 
+### Claude Code integration
+
+- [ ] **INT-01**: CLI 명령(pull, import, delete)이 `--yes` 플래그 및 TTY 자동 감지로 비대화형 실행을 지원한다.
+- [ ] **INT-02**: `ccb setup` 명령이 Claude Code 커맨드 파일을 `~/.claude/commands/bundle/`에 설치한다.
+- [ ] **INT-03**: `ccb browse` 명령이 public 번들 browse API를 호출하여 탐색 결과를 출력한다.
+- [ ] **INT-04**: `/bundle:import`, `/bundle:pull`, `/bundle:status`, `/bundle:browse` 슬래시 커맨드 파일이 npm 패키지에 포함된다.
+- [ ] **INT-05**: `ccb import` 실행 시 커맨드 파일이 자동으로 설치된다 (side-effect).
+- [ ] **INT-06**: npm 패키지 publish 준비 완료 (`private` 제거, `files` 필드에 `dist`+`commands` 포함).
+
 ## v2 Requirements
 
 (초기 로드맵에 포함됐으나 구현 순서는 후순위로 둘 항목을 여기에도 적어 둔다.)
@@ -87,14 +96,20 @@
 | MOD-01 | Phase 4 | Complete |
 | FND-01 | Phase 5 | Complete |
 | OPS-01 | Phase 5 | Complete |
+| INT-01 | Phase 6 | Planned |
+| INT-02 | Phase 6 | Planned |
+| INT-03 | Phase 6 | Planned |
+| INT-04 | Phase 6 | Planned |
+| INT-05 | Phase 6 | Planned |
+| INT-06 | Phase 6 | Planned |
 
 **Coverage:**
 
-- v1 requirements: 21 total
-- Mapped to phases: 21
-- Unmapped: 0 ✓
+- v1 requirements: 27 total
+- Mapped to phases: 27
+- Unmapped: 0
 
 ---
 
 *Requirements defined: 2026-03-31*  
-*Last updated: 2026-03-31 — Phase 2 requirements marked complete (code + planning closure)*
+*Last updated: 2026-04-02 — Phase 6 INT-01 through INT-06 requirements added*
