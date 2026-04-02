@@ -153,3 +153,25 @@ Plans:
 | 4. Public + lineage | 3/3 | Complete    | 2026-04-02 |
 | 5. Discovery + beta | 0/2 | Not started | - |
 | 6. Claude Code integration | 0/1 | Not started | - |
+| 7. Security hardening | 0/2 | Not started | - |
+
+### Phase 7: Security hardening
+
+**Goal:** 번들 업로드·다운로드 전 경로에서 시크릿 스캔 패턴을 강화하고, prompt injection 유사 위협(다른 사용자 디바이스에 영향을 줄 수 있는 콘텐츠)을 감지·차단한다. 다운로드(import) 시에도 스캔을 수행하여 선택권을 제공한다.
+
+**Depends on:** Phase 4
+
+**Requirements:** TBD
+
+**Success Criteria**:
+
+1. 업로드 시 시크릿 패턴(Anthropic, Google, GitHub 등 주요 서비스 API key 포함)이 확장된 규칙으로 차단된다.
+2. 업로드 시 prompt injection 유사 패턴이 감지되면 차단된다.
+3. 다운로드(import/pull) 시에도 동일한 스캔이 수행되고, 위협 감지 시 사용자에게 경고 또는 차단 옵션을 제공한다.
+4. 스캔 로직은 `packages/core`에 단일 구현되어 서버·CLI 모두 동일 규칙을 사용한다.
+
+**Plans:** TBD
+
+Plans:
+- [ ] 07-01: 시크릿 스캔 패턴 확장 + prompt injection 감지 규칙 (packages/core)
+- [ ] 07-02: 다운로드(import/pull) 경로에 스캔 적용 + CLI/API 경고·차단 UX

@@ -6,11 +6,11 @@ status: verifying
 stopped_at: Completed 04-03-PLAN.md — Phase 4 CLI commands complete
 last_updated: "2026-04-02T00:33:54.363Z"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 4
-  total_plans: 11
+  total_plans: 13
   completed_plans: 11
-  percent: 91
+  percent: 84
 ---
 
 # Project State
@@ -70,6 +70,10 @@ Progress: `[█████████░] 91%` (10 of 11 plans complete — Ph
 - `snapshotHash` added as optional field in `RegistryEntry` for backward compat with existing registry entries
 - Used rb.id (UUID) for downloadSnapshotToFile API call, public_bundle_id as registry key — matches server API and local registry conventions
 - `status.ts` falls back to snapshotId when snapshotHash absent for backward compat with pre-plan-01 registry entries
+
+### Roadmap Evolution
+
+- Phase 7 added: Security hardening — 시크릿 스캔 패턴 확장 + prompt injection 감지 + 다운로드 경로 스캔 (2026-04-02)
 
 ### Blockers/Concerns
 
