@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-04-02T00:11:07.776Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-04-02T00:19:14.845Z"
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 11
-  completed_plans: 9
-  percent: 100
+  completed_plans: 10
+  percent: 82
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: `.planning/PROJECT.md`
 ## Current Position
 
 Phase: 04 (public-sharing-lineage) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 Status: Ready to execute
 
-Progress: `[████████░░] 82%` (9 of 11 plans complete — Phase 1, 2, 3 fully done; Phase 4 plan 1/3 done)
+Progress: `[█████████░] 91%` (10 of 11 plans complete — Phase 1, 2, 3 fully done; Phase 4 plans 1-2/3 done)
 
 ## Verification (2026-03-31)
 
@@ -48,6 +48,13 @@ Progress: `[████████░░] 82%` (9 of 11 plans complete — Pha
 
 - Phase 3: `03-01` COMPLETE — auth-store, login, unified auth resolution done
 - Phase 3: `03-02` COMPLETE — ccb pull + ccb status commands
+
+### Phase 4 Decisions (04-02)
+
+- Public bundle GET uses createAdminClient without requireUser — service role enforces visibility=public filter explicitly
+- Import 409 duplicate check with overwrite=true escape hatch mirrors Phase 3 pull conflict pattern for consistent UX
+- Delete ordering: collect R2 keys, delete DB first (CASCADE), then clean R2 non-fatally — orphaned objects safer than orphaned rows
+- root_author_id propagation: if source has lineage use its root_author_id, else fallback to source bundle owner_user_id
 
 ### Phase 4 Decisions (04-01)
 
@@ -70,7 +77,7 @@ Progress: `[████████░░] 82%` (9 of 11 plans complete — Pha
 
 ## Session Continuity
 
-Last session: 2026-04-02T00:11:07.773Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-04-02T00:19:14.842Z
+Stopped at: Completed 04-02-PLAN.md
 
-Resume: Phase 4 plan 1/3 complete. Next: 04-02-PLAN.md (import flow: POST /api/bundles/import + R2 copy + lineage).
+Resume: Phase 4 plans 1-2/3 complete. Next: 04-03-PLAN.md (CLI commands: ccb publish, ccb import, ccb unpublish, ccb delete).
