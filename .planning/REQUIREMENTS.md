@@ -34,7 +34,7 @@
 
 ### Public sharing & lineage
 
-- [ ] **PUB-01**: 소유자가 번들을 public으로 전환하고 공개 스냅샷을 노출할 수 있다.
+- [x] **PUB-01**: 소유자가 번들을 public으로 전환하고 공개 스냅샷을 노출할 수 있다.
 - [ ] **PUB-02**: 공개 번들 import 시 요청자 계정에 **새 private bundle**이 생기고 lineage(parent/root/imported_snapshot)가 기록된다.
 - [ ] **PUB-03**: API 또는 최소 UI에서 **Published by / Originated by**가 일관되게 노출된다.
 - [ ] **MOD-01**: public 번들에 대한 최소 unpublish·숨김 경로(소유자 또는 운영 스텁)가 있다.
@@ -81,7 +81,7 @@
 | SEC-01 | Phase 2 | Complete |
 | SYNC-01 | Phase 3 | Complete |
 | SYNC-02 | Phase 3 | Complete |
-| PUB-01 | Phase 4 | Pending |
+| PUB-01 | Phase 4 | Complete |
 | PUB-02 | Phase 4 | Pending |
 | PUB-03 | Phase 4 | Pending |
 | MOD-01 | Phase 4 | Pending |

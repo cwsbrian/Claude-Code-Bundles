@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 4 context gathered
-last_updated: "2026-04-01T21:44:25.031Z"
+status: executing
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-04-02T00:11:07.776Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 11
+  completed_plans: 9
   percent: 100
 ---
 
@@ -21,16 +21,16 @@ See: `.planning/PROJECT.md`
 
 **Core value:** 한 번 정의한 작업 번들을 로컬에서 검증한 뒤, 같은 계정으로 어떤 기기에서도 같은 스냅샷으로 복원할 수 있다.
 
-**Current focus:** Phase 03 — multi-device-sync
+**Current focus:** Phase 04 — public-sharing-lineage
 
 ## Current Position
 
-Phase: 03 (multi-device-sync) — COMPLETE
-Plan: 2 of 2 (all done)
+Phase: 04 (public-sharing-lineage) — EXECUTING
+Plan: 2 of 3
 
-Status: Phase 3 complete — ready for verification
+Status: Ready to execute
 
-Progress: `[██████████] 100%` (8 of 8 plans complete — Phase 1, 2, 3 fully done)
+Progress: `[████████░░] 82%` (9 of 11 plans complete — Phase 1, 2, 3 fully done; Phase 4 plan 1/3 done)
 
 ## Verification (2026-03-31)
 
@@ -49,6 +49,13 @@ Progress: `[██████████] 100%` (8 of 8 plans complete — Pha
 - Phase 3: `03-01` COMPLETE — auth-store, login, unified auth resolution done
 - Phase 3: `03-02` COMPLETE — ccb pull + ccb status commands
 
+### Phase 4 Decisions (04-01)
+
+- Publish toggle is a single PATCH endpoint: public->private = unpublish, private->public = publish (D-24)
+- bundle_publish_records records latest snapshot ID on each publish event (D-02/D-03/D-06)
+- R2 CopyObjectCommand CopySource uses `/${bucket}/${key}` leading-slash format per R2 docs
+- Profiles auto-populated via DB trigger on auth.users INSERT; backfill covers existing users (D-14)
+
 ### Phase 3 Decisions (03-01 + 03-02)
 
 - Store `api_url` in auth.json alongside tokens so `ccb remote` works without env vars after login
@@ -63,7 +70,7 @@ Progress: `[██████████] 100%` (8 of 8 plans complete — Pha
 
 ## Session Continuity
 
-Last session: 2026-04-01T21:44:25.028Z
-Stopped at: Phase 4 context gathered
+Last session: 2026-04-02T00:11:07.773Z
+Stopped at: Completed 04-01-PLAN.md
 
-Resume: Phase 3 complete. Next is Phase 4 (public sharing) when ready.
+Resume: Phase 4 plan 1/3 complete. Next: 04-02-PLAN.md (import flow: POST /api/bundles/import + R2 copy + lineage).
