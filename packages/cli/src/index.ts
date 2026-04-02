@@ -108,6 +108,10 @@ function printUsage(): void {
       "  ccb remote download --bundle <uuid> --snapshot <uuid> --out <file.zip> [--api-url] [--token]",
       "  ccb pull [--api-url] [--token]",
       "  ccb status [--api-url] [--token]",
+      "  ccb publish <bundleId> [--api-url] [--token]",
+      "  ccb unpublish <bundleId> [--api-url] [--token]",
+      "  ccb import <owner/bundleId> [--api-url] [--token]",
+      "  ccb delete <bundleId> [--api-url] [--token]",
     ].join("\n"),
   );
 }
@@ -312,6 +316,30 @@ export async function main(argv: string[]): Promise<void> {
   if (command === "status") {
     const status = await import("./status.js");
     await status.runStatus(args);
+    return;
+  }
+
+  if (command === "publish") {
+    const publish = await import("./publish.js");
+    await publish.runPublish(args);
+    return;
+  }
+
+  if (command === "unpublish") {
+    const unpublish = await import("./unpublish.js");
+    await unpublish.runUnpublish(args);
+    return;
+  }
+
+  if (command === "import") {
+    const importCmd = await import("./import.js");
+    await importCmd.runImport(args);
+    return;
+  }
+
+  if (command === "delete") {
+    const deleteCmd = await import("./delete.js");
+    await deleteCmd.runDelete(args);
     return;
   }
 
