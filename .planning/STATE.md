@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 5 context gathered
-last_updated: "2026-04-02T18:42:31.194Z"
+stopped_at: Completed 05-02-PLAN.md (Browse API, Report API, Health endpoint)
+last_updated: "2026-04-02T20:37:31.266Z"
 progress:
   total_phases: 7
   completed_phases: 4
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 13
+  completed_plans: 12
   percent: 91
 ---
 
@@ -21,16 +21,16 @@ See: `.planning/PROJECT.md`
 
 **Core value:** 한 번 정의한 작업 번들을 로컬에서 검증한 뒤, 같은 계정으로 어떤 기기에서도 같은 스냅샷으로 복원할 수 있다.
 
-**Current focus:** Phase 04 — public-sharing-lineage
+**Current focus:** Phase 05 — discovery-operational-beta
 
 ## Current Position
 
-Phase: 06
-Plan: Not started
+Phase: 05
+Plan: 02 complete (Plan 01 pending)
 
-Status: Phase complete — ready for verification
+Status: In progress — Plan 02 complete, Plan 01 (migration) still needed
 
-Progress: `[█████████░] 91%` (10 of 11 plans complete — Phase 1, 2, 3 fully done; Phase 4 plans 1-2/3 done)
+Progress: `[█████████░] 92%` (12 of 13 plans complete)
 
 ## Verification (2026-03-31)
 
@@ -71,6 +71,14 @@ Progress: `[█████████░] 91%` (10 of 11 plans complete — Ph
 - Used rb.id (UUID) for downloadSnapshotToFile API call, public_bundle_id as registry key — matches server API and local registry conventions
 - `status.ts` falls back to snapshotId when snapshotHash absent for backward compat with pre-plan-01 registry entries
 
+### Phase 5 Decisions (05-02)
+
+- Browse API is anonymous (no requireUser) — consistent with Phase 4 [owner]/[slug] pattern
+- Cursor encodes primary sort value + id for stable tie-breaking across pages in cursor-based pagination
+- Tag filter uses two-step query (bundle_tags lookup then .in()) for Supabase JS client compatibility
+- Health check uses profiles count query with head: true as lightweight DB connectivity test
+- Report duplicate detection via Postgres 23505 unique constraint code, returns 409
+
 ### Roadmap Evolution
 
 - Phase 7 added: Security hardening — 시크릿 스캔 패턴 확장 + prompt injection 감지 + 다운로드 경로 스캔 (2026-04-02)
@@ -81,7 +89,7 @@ Progress: `[█████████░] 91%` (10 of 11 plans complete — Ph
 
 ## Session Continuity
 
-Last session: 2026-04-02T18:42:31.190Z
-Stopped at: Phase 5 context gathered
+Last session: 2026-04-02T20:37:31.263Z
+Stopped at: Completed 05-02-PLAN.md (Browse API, Report API, Health endpoint)
 
-Resume: Phase 4 plans 1-2/3 complete. Next: 04-03-PLAN.md (CLI commands: ccb publish, ccb import, ccb unpublish, ccb delete).
+Resume: Phase 5 Plan 02 complete (Browse API, Report API, Health endpoint). Plan 01 (migration: bundle_tags, bundle_reports, import_count) still needs execution.

@@ -41,8 +41,8 @@
 
 ### Discovery & operations (roadmap 후반)
 
-- [ ] **FND-01**: Public 번들을 태그·정렬 기준으로 browse 할 수 있다(기본 수준).
-- [ ] **OPS-01**: 신고·기본 moderation 훅과 운영에 필요한 최소 관측(설치 성공 등)이 문서화·스텁 수준으로 존재한다.
+- [x] **FND-01**: Public 번들을 태그·정렬 기준으로 browse 할 수 있다(기본 수준).
+- [x] **OPS-01**: 신고·기본 moderation 훅과 운영에 필요한 최소 관측(설치 성공 등)이 문서화·스텁 수준으로 존재한다.
 
 ## v2 Requirements
 
@@ -85,8 +85,8 @@
 | PUB-02 | Phase 4 | Complete |
 | PUB-03 | Phase 4 | Complete |
 | MOD-01 | Phase 4 | Complete |
-| FND-01 | Phase 5 | Pending |
-| OPS-01 | Phase 5 | Pending |
+| FND-01 | Phase 5 | Complete |
+| OPS-01 | Phase 5 | Complete |
 
 **Coverage:**
 
