@@ -117,12 +117,12 @@ Plans:
 1. 태그·정렬 기준으로 public 번들을 browse 할 수 있다.
 2. 신고·운영 경로가 문서와 코드에 스텁으로 존재하고 관측 포인트가 정의된다.
 
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
 
-- [ ] 05-01: browse API·최소 UI(선택)
-- [ ] 05-02: 신고·기본 운영·관측
+- [ ] [05-01-PLAN.md](phases/05-discovery-operational-beta/05-01-PLAN.md) — DB migration (bundle_tags, bundle_reports, import_count) + PATCH tag management + import_count wiring (FND-01, OPS-01)
+- [ ] [05-02-PLAN.md](phases/05-discovery-operational-beta/05-02-PLAN.md) — Browse API (sort/filter/pagination) + Report API + Health endpoint (FND-01, OPS-01)
 
 ### Phase 6: Claude Code integration
 
