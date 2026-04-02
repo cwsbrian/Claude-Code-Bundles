@@ -1,8 +1,9 @@
 {
   "name": "@claude-code-bundles/cli",
   "version": "0.1.0",
-  "private": true,
+  "description": "Claude Code Bundle CLI - manage bundles from your terminal or Claude Code",
   "type": "module",
+  "files": ["dist", "commands"],
   "bin": {
     "ccb": "./dist/index.js"
   },

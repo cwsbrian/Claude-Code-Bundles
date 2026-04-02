@@ -46,12 +46,12 @@
 
 ### Claude Code integration
 
-- [x] **INT-01**: CLI 명령(pull, import, delete)이 `--yes` 플래그 및 TTY 자동 감지로 비대화형 실행을 지원한다.
-- [ ] **INT-02**: `ccb setup` 명령이 Claude Code 커맨드 파일을 `~/.claude/commands/bundle/`에 설치한다.
-- [x] **INT-03**: `ccb browse` 명령이 public 번들 browse API를 호출하여 탐색 결과를 출력한다.
-- [ ] **INT-04**: `/bundle:import`, `/bundle:pull`, `/bundle:status`, `/bundle:browse` 슬래시 커맨드 파일이 npm 패키지에 포함된다.
-- [ ] **INT-05**: `ccb import` 실행 시 커맨드 파일이 자동으로 설치된다 (side-effect).
-- [ ] **INT-06**: npm 패키지 publish 준비 완료 (`private` 제거, `files` 필드에 `dist`+`commands` 포함).
+- [ ] **INT-01**: CLI 명령(pull, import, delete)이 `--yes` 플래그 및 TTY 자동 감지로 비대화형 실행을 지원한다.
+- [x] **INT-02**: `ccb setup` 명령이 Claude Code 커맨드 파일을 `~/.claude/commands/bundle/`에 설치한다.
+- [ ] **INT-03**: `ccb browse` 명령이 public 번들 browse API를 호출하여 탐색 결과를 출력한다.
+- [x] **INT-04**: `/bundle:import`, `/bundle:pull`, `/bundle:status`, `/bundle:browse` 슬래시 커맨드 파일이 npm 패키지에 포함된다.
+- [x] **INT-05**: `ccb import` 실행 시 커맨드 파일이 자동으로 설치된다 (side-effect).
+- [x] **INT-06**: npm 패키지 publish 준비 완료 (`private` 제거, `files` 필드에 `dist`+`commands` 포함).
 
 ## v2 Requirements
 

@@ -113,6 +113,7 @@ function printUsage(): void {
       "  ccb import <owner/bundleId> [--api-url] [--token]",
       "  ccb delete <bundleId> [--api-url] [--token]",
       "  ccb browse [--sort recent|popular|alphabetical] [--tag <name>] [--limit <n>] [--api-url]",
+      "  ccb setup [--force]",
     ].join("\n"),
   );
 }
@@ -347,6 +348,12 @@ export async function main(argv: string[]): Promise<void> {
   if (command === "browse") {
     const browse = await import("./browse.js");
     await browse.runBrowse(args);
+    return;
+  }
+
+  if (command === "setup") {
+    const setup = await import("./setup.js");
+    await setup.runSetup(args);
     return;
   }
 
