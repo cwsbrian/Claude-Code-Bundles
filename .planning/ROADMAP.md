@@ -117,7 +117,7 @@ Plans:
 1. 태그·정렬 기준으로 public 번들을 browse 할 수 있다.
 2. 신고·운영 경로가 문서와 코드에 스텁으로 존재하고 관측 포인트가 정의된다.
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 
@@ -151,7 +151,7 @@ Plans:
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
 | 4. Public + lineage | 3/3 | Complete    | 2026-04-02 |
-| 5. Discovery + beta | 0/2 | Not started | - |
+| 5. Discovery + beta | 1/2 | In Progress|  |
 | 6. Claude Code integration | 0/1 | Not started | - |
 | 7. Security hardening | 0/2 | Not started | - |
 

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 5 context gathered
-last_updated: "2026-04-02T18:42:31.194Z"
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-04-02T20:30:17.306Z"
 progress:
   total_phases: 7
   completed_phases: 4
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 13
+  completed_plans: 12
   percent: 91
 ---
 
@@ -21,16 +21,16 @@ See: `.planning/PROJECT.md`
 
 **Core value:** 한 번 정의한 작업 번들을 로컬에서 검증한 뒤, 같은 계정으로 어떤 기기에서도 같은 스냅샷으로 복원할 수 있다.
 
-**Current focus:** Phase 04 — public-sharing-lineage
+**Current focus:** Phase 05 — discovery-operational-beta
 
 ## Current Position
 
-Phase: 06
-Plan: Not started
+Phase: 05
+Plan: 1 of 2 complete
 
-Status: Phase complete — ready for verification
+Status: In progress — Phase 5 plan 1 complete
 
-Progress: `[█████████░] 91%` (10 of 11 plans complete — Phase 1, 2, 3 fully done; Phase 4 plans 1-2/3 done)
+Progress: `[█████████░] 92%` (12 of 13 plans complete)
 
 ## Verification (2026-03-31)
 
@@ -81,7 +81,15 @@ Progress: `[█████████░] 91%` (10 of 11 plans complete — Ph
 
 ## Session Continuity
 
-Last session: 2026-04-02T18:42:31.190Z
-Stopped at: Phase 5 context gathered
+Last session: 2026-04-02T20:30:17.303Z
+Stopped at: Completed 05-01-PLAN.md
 
-Resume: Phase 4 plans 1-2/3 complete. Next: 04-03-PLAN.md (CLI commands: ccb publish, ccb import, ccb unpublish, ccb delete).
+Resume: Phase 5 plan 01 complete. Next: 05-02-PLAN.md (browse/report API endpoints).
+
+### Phase 5 Decisions (05-01)
+
+- bundle_tags uses separate table (not JSONB) for normalization and efficient tag filtering via bundle_tags_tag_name_idx
+- Max 5 tags enforced at API level only — keeps DB schema flexible, matches D-08
+- bundle_reports has no public SELECT policy — admin access via service role through Supabase dashboard (D-13/D-15)
+- import_count uses read-then-write increment (not Postgres RPC) — eventual consistency acceptable for beta counter (D-18)
+- PATCH tag update uses replace-all strategy (delete + insert) for simplicity and idempotency
