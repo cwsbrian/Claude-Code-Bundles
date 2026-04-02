@@ -112,6 +112,7 @@ function printUsage(): void {
       "  ccb unpublish <bundleId> [--api-url] [--token]",
       "  ccb import <owner/bundleId> [--api-url] [--token]",
       "  ccb delete <bundleId> [--api-url] [--token]",
+      "  ccb browse [--sort recent|popular|alphabetical] [--tag <name>] [--limit <n>] [--api-url]",
     ].join("\n"),
   );
 }
@@ -340,6 +341,12 @@ export async function main(argv: string[]): Promise<void> {
   if (command === "delete") {
     const deleteCmd = await import("./delete.js");
     await deleteCmd.runDelete(args);
+    return;
+  }
+
+  if (command === "browse") {
+    const browse = await import("./browse.js");
+    await browse.runBrowse(args);
     return;
   }
 
