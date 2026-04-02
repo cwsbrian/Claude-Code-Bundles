@@ -141,6 +141,19 @@ export async function POST(request: Request) {
       imported_snapshot_id: sourceSnapshot.id,
     });
 
+    // 9. Increment import_count on source bundle (D-16)
+    //    Non-critical counter — eventual consistency acceptable (D-18).
+    //    Race condition on concurrent imports could lose a count, acceptable for beta.
+    const { data: currentBundle } = await admin
+      .from("bundles")
+      .select("import_count")
+      .eq("id", sourceBundle.id)
+      .single();
+    await admin
+      .from("bundles")
+      .update({ import_count: (currentBundle?.import_count ?? 0) + 1 })
+      .eq("id", sourceBundle.id);
+
     return Response.json(
       {
         bundleId: bundleUuid,
