@@ -9,7 +9,7 @@
 - [x] **Phase 1: Spec + local bundle MVP** — 스키마·정책·매핑 문서 고정 + Claude용 pack/unpack/apply/lint, 서버 없이 E2E
 - [x] **Phase 2: Backend + private backup** — Supabase 스키마·RLS, **R2**에 zip(서버만 쓰기), Vercel API 업로드/다운로드
 - [x] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원 (completed 2026-04-01)
-- [ ] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation
+- [x] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation (completed 2026-04-02)
 - [ ] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측
 - [ ] **Phase 6: Claude Code integration** — CLI 대신 Claude Code 안에서 `/bundle` 슬래시 커맨드(skill)로 번들 기능 사용
 
@@ -96,7 +96,7 @@ Plans:
 3. Published by / Originated by가 사용자에게 보인다.
 4. 최소 unpublish/숨김이 가능하다.
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 
@@ -150,6 +150,6 @@ Plans:
 | 1. Spec + local MVP | 3/3 | Complete | 2026-03-31 |
 | 2. Backend + backup | 3/3 | Complete | 2026-03-31 |
 | 3. Multi-device | 2/2 | Complete   | 2026-04-01 |
-| 4. Public + lineage | 2/3 | In Progress | - |
+| 4. Public + lineage | 3/3 | Complete   | 2026-04-02 |
 | 5. Discovery + beta | 0/2 | Not started | - |
 | 6. Claude Code integration | 0/1 | Not started | - |
