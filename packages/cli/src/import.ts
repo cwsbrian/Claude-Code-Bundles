@@ -22,6 +22,7 @@ export async function runImport(args: string[]): Promise<void> {
   const [owner, slug] = ref.split("/", 2) as [string, string];
   const ctx = await resolveApiContext(args);
   const nonInteractive = !process.stdin.isTTY || args.includes("--yes") || args.includes("-y");
+  const dryRun = args.includes("--dry-run");
   const apiOrigin = ctx.apiUrl.replace(/\/$/, "");
 
   // 1. Preview: fetch public bundle metadata (anonymous)
@@ -68,6 +69,25 @@ export async function runImport(args: string[]): Promise<void> {
     throw new Error("Bundle has no snapshots to import.");
   }
   process.stdout.write(`Snapshot: ${preview.latest_snapshot.normalized_snapshot_hash}\n\n`);
+
+  // 2b. Dry-run: print file list and exit without importing (D-11, D-12)
+  if (dryRun) {
+    process.stdout.write("Files to be installed:\n");
+    if (preview.contents_summary) {
+      const cs = preview.contents_summary;
+      for (const skill of cs.skills) {
+        process.stdout.write(`  ~/.claude/skills/${skill}/\n`);
+      }
+      for (const cmd of cs.commands) {
+        process.stdout.write(`  ~/.claude/commands/${cmd}.md\n`);
+      }
+      for (const hook of cs.hooks) {
+        process.stdout.write(`  ~/.claude/hooks/${hook}\n`);
+      }
+    }
+    process.stdout.write("\n(Dry run — nothing installed)\n");
+    return;
+  }
 
   // 3. Call import API (D-07)
   const importUrl = `${apiOrigin}/api/bundles/import`;

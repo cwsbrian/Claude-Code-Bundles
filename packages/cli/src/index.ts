@@ -95,7 +95,7 @@ function printUsage(): void {
       "Usage:",
       "  ccb login [--supabase-url] [--supabase-anon-key] [--api-url]",
       "  ccb logout",
-      "  ccb create",
+      "  ccb create [--name <name>] [--visibility private|public] [--items 1,2,3,4]",
       "  ccb pack --manifest <path> --out <archive>",
       "  ccb unpack --archive <path> --out <dir>",
       "  ccb apply --manifest <path> [--force]",
@@ -110,7 +110,7 @@ function printUsage(): void {
       "  ccb status [--api-url] [--token]",
       "  ccb publish <bundleId> [--api-url] [--token]",
       "  ccb unpublish <bundleId> [--api-url] [--token]",
-      "  ccb import <owner/bundleId> [--api-url] [--token]",
+      "  ccb import <owner/bundleId> [--dry-run] [--api-url] [--token]",
       "  ccb delete <bundleId> [--api-url] [--token]",
       "  ccb browse [--sort recent|popular|alphabetical] [--tag <name>] [--limit <n>] [--api-url]",
       "  ccb setup [--force]",
@@ -180,6 +180,9 @@ export async function main(argv: string[]): Promise<void> {
       stdin: process.stdin,
       stdout: process.stdout,
       env: process.env,
+      name: getArgValue(args, "--name", "-n"),
+      visibility: getArgValue(args, "--visibility", "-v"),
+      items: getArgValue(args, "--items", "-i"),
     });
     process.stdout.write(`Created ${outPath}\n`);
     return;
