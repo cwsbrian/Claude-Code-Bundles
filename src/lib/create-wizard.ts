@@ -1,13 +1,12 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import readline from "node:readline/promises";
-import { stdin as processStdin, stdout as processStdout } from "node:process";
 
 type WizardOptions = {
   cwd: string;
-  stdin?: NodeJS.ReadableStream;
-  stdout?: NodeJS.WritableStream;
   env?: NodeJS.ProcessEnv;
+  name?: string;
+  visibility?: string;
+  items?: string;
 };
 
 const checklistChoices = [
@@ -29,35 +28,13 @@ function parseChecklist(value: string): string[] {
 }
 
 export async function createWizard(options: WizardOptions): Promise<string> {
-  const stdin = options.stdin ?? processStdin;
-  const stdout = options.stdout ?? processStdout;
   const env = options.env ?? process.env;
-  const nonInteractive = env.BUNDLE_CLI_NONINTERACTIVE === "1";
 
-  let name = env.BUNDLE_CLI_NAME ?? "My Bundle";
-  let visibility = (env.BUNDLE_CLI_VISIBILITY ?? "private") as
+  const name = options.name ?? env.BUNDLE_CLI_NAME ?? "My Bundle";
+  const visibility = (options.visibility ?? env.BUNDLE_CLI_VISIBILITY ?? "private") as
     | "private"
     | "public";
-  let selected = parseChecklist(env.BUNDLE_CLI_ITEMS ?? "1,2,3,4");
-
-  if (!nonInteractive) {
-    const rl = readline.createInterface({ input: stdin, output: stdout });
-    name = (await rl.question("Bundle name: ")).trim();
-
-    const visibilityChoice = (
-      await rl.question("Visibility (1=private, 2=public): ")
-    ).trim();
-    visibility = visibilityChoice === "2" ? "public" : "private";
-
-    stdout.write("Include components:\n");
-    checklistChoices.forEach((choice, idx) =>
-      stdout.write(`  ${idx + 1}) ${choice}\n`),
-    );
-    selected = parseChecklist(
-      await rl.question("Select numbers (comma-separated, blank for none): "),
-    );
-    rl.close();
-  }
+  const selected = parseChecklist(options.items ?? env.BUNDLE_CLI_ITEMS ?? "1,2,3,4");
 
   const bundleId = name
     .toLowerCase()

@@ -177,8 +177,6 @@ export async function main(argv: string[]): Promise<void> {
   if (command === "create") {
     const outPath = await createWizard({
       cwd: process.cwd(),
-      stdin: process.stdin,
-      stdout: process.stdout,
       env: process.env,
       name: getArgValue(args, "--name", "-n"),
       visibility: getArgValue(args, "--visibility", "-v"),
