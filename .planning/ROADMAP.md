@@ -11,7 +11,9 @@
 - [x] **Phase 3: Multi-device sync** — 디바이스·설치 상태, pull로 동일 스냅샷 복원 (completed 2026-04-01)
 - [x] **Phase 4: Public sharing + lineage** — public 전환, import→private copy, Published by / Originated by, 최소 moderation (completed 2026-04-02)
 - [x] **Phase 5: Discovery + operational beta** — 기본 browse, 신고/운영 스텁·관측 (completed 2026-04-02)
-- [ ] **Phase 6: Claude Code integration** — CLI 대신 Claude Code 안에서 `/bundle` 슬래시 커맨드(skill)로 번들 기능 사용
+- [x] **Phase 6: Claude Code integration** — CLI 대신 Claude Code 안에서 `/bundle` 슬래시 커맨드(skill)로 번들 기능 사용 (completed 2026-04-02)
+- [x] **Phase 7: Security hardening** — 시크릿 스캔 패턴 확장, prompt injection 감지, 다운로드 경로 스캔 (completed 2026-04-03)
+- [x] **Phase 8: Skill UX architecture** — CLI 순수 실행 엔진화, 스킬 UX 레이어(create/import/pull 재설계) (completed 2026-04-03)
 
 ## Phase Details
 
@@ -189,5 +191,5 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] [08-01-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-01-PLAN.md) — Add --dry-run to ccb import + remove TTY readline wizard from createWizard (UX-01, UX-02)
-- [ ] [08-02-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-02-PLAN.md) — Write create.md (name-arg branch) + rewrite import.md and pull.md with confirmation flows (UX-03, UX-04, UX-05)
+- [x] [08-01-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-01-PLAN.md) — Add --dry-run to ccb import + remove TTY readline wizard from createWizard (UX-01, UX-02)
+- [x] [08-02-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-02-PLAN.md) — Write create.md (name-arg branch) + rewrite import.md and pull.md with confirmation flows (UX-03, UX-04, UX-05)

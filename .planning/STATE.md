@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-04-02T23:08:08.658Z"
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-04-03T23:10:00.000Z"
 progress:
-  total_phases: 7
-  completed_phases: 6
-  total_plans: 15
-  completed_plans: 15
-  percent: 92
+  total_phases: 8
+  completed_phases: 8
+  total_plans: 17
+  completed_plans: 17
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ See: `.planning/PROJECT.md`
 
 **Core value:** 한 번 정의한 작업 번들을 로컬에서 검증한 뒤, 같은 계정으로 어떤 기기에서도 같은 스냅샷으로 복원할 수 있다.
 
-**Current focus:** Phase 05 — discovery-operational-beta
+**Current focus:** Phase 08 — skill-ux-architecture-create-import-pull-redesign
 
 ## Current Position
 
-Phase: 07
-Plan: Not started
+Phase: 08 (skill-ux-architecture-create-import-pull-redesign) — COMPLETE
+Plan: 2 of 2 (COMPLETE)
 
-Status: In progress — Plan 02 complete, Plan 01 (migration) still needed
+Status: Phase 8 complete — all plans executed
 
-Progress: `[█████████░] 92%` (12 of 13 plans complete)
+Progress: `[██████████] 100%` (17 of 17 plans complete)
 
 ## Verification (2026-03-31)
 
@@ -79,6 +79,13 @@ Progress: `[█████████░] 92%` (12 of 13 plans complete)
 - Health check uses profiles count query with head: true as lightweight DB connectivity test
 - Report duplicate detection via Postgres 23505 unique constraint code, returns 409
 
+### Phase 8 Decisions (08-02)
+
+- create.md has two branches: name in $ARGUMENTS => 1-turn (AskUserQuestion for visibility + components only); no name => 2-turn (plain text name question first, then AskUserQuestion)
+- import.md runs --dry-run, shows raw output in code block (D-03: AI must NOT interpret contents — prompt injection defense), then AskUserQuestion '설치할까요?' before --yes
+- pull.md runs ccb status first, exits with '최신 상태' message if nothing to sync, then AskUserQuestion '동기화할까요?' before --yes
+- packages/ versions use npx @claude-code-bundles/cli; locally installed ~/.claude/ versions use node ~/personal/... local build path
+
 ### Roadmap Evolution
 
 - Phase 7 added: Security hardening — 시크릿 스캔 패턴 확장 + prompt injection 감지 + 다운로드 경로 스캔 (2026-04-02)
@@ -90,7 +97,7 @@ Progress: `[█████████░] 92%` (12 of 13 plans complete)
 
 ## Session Continuity
 
-Last session: 2026-04-02T23:03:38.918Z
-Stopped at: Completed 06-02-PLAN.md
+Last session: 2026-04-03T23:10:00.000Z
+Stopped at: Completed 08-02-PLAN.md
 
-Resume: Phase 5 Plan 02 complete (Browse API, Report API, Health endpoint). Plan 01 (migration: bundle_tags, bundle_reports, import_count) still needs execution.
+All phases and plans complete. Phase 8 (Skill UX Architecture) finished: create.md new file, import.md and pull.md rewritten with dry-run preview and status confirmation flows.
