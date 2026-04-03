@@ -176,3 +176,13 @@ Plans:
 Plans:
 - [ ] 07-01: 시크릿 스캔 패턴 확장 + prompt injection 감지 규칙 (packages/core)
 - [ ] 07-02: 다운로드(import/pull) 경로에 스캔 적용 + CLI/API 경고·차단 UX
+
+### Phase 8: Skill UX architecture — create, import, pull redesign
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 7
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 8 to break down)

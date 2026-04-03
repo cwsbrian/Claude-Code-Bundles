@@ -82,6 +82,7 @@ Progress: `[█████████░] 92%` (12 of 13 plans complete)
 ### Roadmap Evolution
 
 - Phase 7 added: Security hardening — 시크릿 스캔 패턴 확장 + prompt injection 감지 + 다운로드 경로 스캔 (2026-04-02)
+- Phase 8 added: Skill UX architecture — create, import, pull redesign (2026-04-03)
 
 ### Blockers/Concerns
 
