@@ -155,6 +155,7 @@ Plans:
 | 5. Discovery + beta | 1/2 | Complete    | 2026-04-02 |
 | 6. Claude Code integration | 0/2 | Not started | - |
 | 7. Security hardening | 0/2 | Not started | - |
+| 8. Skill UX architecture | 0/2 | Not started | - |
 
 ### Phase 7: Security hardening
 
@@ -179,10 +180,14 @@ Plans:
 
 ### Phase 8: Skill UX architecture — create, import, pull redesign
 
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 7
-**Plans:** 0 plans
+**Goal:** CLI를 순수 실행 엔진으로 단순화하고, 모든 사용자 인터랙션(확인, 미리보기, 선택)을 Claude Code 스킬로 이동한다.
+
+**Requirements:** UX-01, UX-02, UX-03, UX-04, UX-05
+
+**Depends on:** Phase 6
+
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 8 to break down)
+- [ ] [08-01-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-01-PLAN.md) — Add --dry-run to ccb import + remove TTY readline wizard from createWizard (UX-01, UX-02)
+- [ ] [08-02-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-02-PLAN.md) — Write create.md (name-arg branch) + rewrite import.md and pull.md with confirmation flows (UX-03, UX-04, UX-05)
