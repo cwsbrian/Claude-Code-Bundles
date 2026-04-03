@@ -89,7 +89,7 @@ function printUsage(): void {
   console.error(
     [
       "Usage:",
-      "  ccb create",
+      "  ccb create [--name <name>] [--visibility private|public] [--items 1,2,3,4]",
       "  ccb pack --manifest <path> --out <archive>",
       "  ccb unpack --archive <path> --out <dir>",
       "  ccb apply --manifest <path> [--force]",
@@ -116,6 +116,9 @@ export async function main(argv: string[]): Promise<void> {
       stdin: process.stdin,
       stdout: process.stdout,
       env: process.env,
+      name: getArgValue(args, "--name", "-n"),
+      visibility: getArgValue(args, "--visibility", "-v"),
+      items: getArgValue(args, "--items", "-i"),
     });
     process.stdout.write(`Created ${outPath}\n`);
     return;

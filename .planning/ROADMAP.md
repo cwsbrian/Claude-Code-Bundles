@@ -157,7 +157,7 @@ Plans:
 | 5. Discovery + beta | 1/2 | Complete    | 2026-04-02 |
 | 6. Claude Code integration | 0/2 | Not started | - |
 | 7. Security hardening | 0/2 | Not started | - |
-| 8. Skill UX architecture | 0/2 | Not started | - |
+| 8. Skill UX architecture | 2/2 | Complete   | 2026-04-03 |
 
 ### Phase 7: Security hardening
 
@@ -188,7 +188,7 @@ Plans:
 
 **Depends on:** Phase 6
 
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] [08-01-PLAN.md](phases/08-skill-ux-architecture-create-import-pull-redesign/08-01-PLAN.md) — Add --dry-run to ccb import + remove TTY readline wizard from createWizard (UX-01, UX-02)

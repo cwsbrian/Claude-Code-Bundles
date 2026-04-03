@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 08-02-PLAN.md
-last_updated: "2026-04-03T23:10:00.000Z"
+status: verifying
+stopped_at: Completed 08-01-PLAN.md
+last_updated: "2026-04-03T23:08:00.723Z"
 progress:
   total_phases: 8
-  completed_phases: 8
+  completed_phases: 7
   total_plans: 17
   completed_plans: 17
   percent: 100
@@ -28,7 +28,7 @@ See: `.planning/PROJECT.md`
 Phase: 08 (skill-ux-architecture-create-import-pull-redesign) — COMPLETE
 Plan: 2 of 2 (COMPLETE)
 
-Status: Phase 8 complete — all plans executed
+Status: Phase complete — ready for verification
 
 Progress: `[██████████] 100%` (17 of 17 plans complete)
 
@@ -79,6 +79,12 @@ Progress: `[██████████] 100%` (17 of 17 plans complete)
 - Health check uses profiles count query with head: true as lightweight DB connectivity test
 - Report duplicate detection via Postgres 23505 unique constraint code, returns 409
 
+### Phase 8 Decisions (08-01)
+
+- dry-run preview fetch still executes before early return to validate bundle exists and get contents_summary for file list
+- createWizard() always flags-only — no conditional TTY check retained; callers pass explicit flags or env vars
+- Both create-wizard.ts files (packages/core and src/lib) updated identically to keep the mirror in sync
+
 ### Phase 8 Decisions (08-02)
 
 - create.md has two branches: name in $ARGUMENTS => 1-turn (AskUserQuestion for visibility + components only); no name => 2-turn (plain text name question first, then AskUserQuestion)
@@ -97,7 +103,7 @@ Progress: `[██████████] 100%` (17 of 17 plans complete)
 
 ## Session Continuity
 
-Last session: 2026-04-03T23:10:00.000Z
-Stopped at: Completed 08-02-PLAN.md
+Last session: 2026-04-03T23:08:00.720Z
+Stopped at: Completed 08-01-PLAN.md
 
 All phases and plans complete. Phase 8 (Skill UX Architecture) finished: create.md new file, import.md and pull.md rewritten with dry-run preview and status confirmation flows.

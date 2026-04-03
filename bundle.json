@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "bundle_id": "test",
-  "name": "test",
+  "bundle_id": "my-bundle",
+  "name": "My Bundle",
   "visibility": "private",
   "version": "0.1.0",
   "manifest_path": "bundle.json",
